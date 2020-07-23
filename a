@@ -1,0 +1,32 @@
+www      17773 17771  0 17:00 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      17776 17773  0 17:00 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      17797 17776  0 17:00 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-e1a031dc5e00f218f089618ee941419f03af8389; '/usr/bin/php' 'artisan' tel:callbackUser --daemon; rm /apps/web/cellular-data/storage/framework/schedule-e1a031dc5e00f218f089618ee941419f03af8389) > '/dev/null' 2>&1
+www      17798 17797  0 17:00 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-e1a031dc5e00f218f089618ee941419f03af8389; '/usr/bin/php' 'artisan' tel:callbackUser --daemon; rm /apps/web/cellular-data/storage/framework/schedule-e1a031dc5e00f218f089618ee941419f03af8389) > '/dev/null' 2>&1
+www      17800 17798  0 17:00 ?        00:00:00 /usr/bin/php artisan tel:callbackUser --daemon
+www      17861 17859  0 17:01 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      17862 17861  0 17:01 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      17886 17862  0 17:01 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-f7a6d72ca904a6e570e168305059c30bf66debe8; '/usr/bin/php' 'artisan' tel:createOrder --daemon; rm /apps/web/cellular-data/storage/framework/schedule-f7a6d72ca904a6e570e168305059c30bf66debe8) > '/dev/null' 2>&1
+www      17887 17886  0 17:01 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-f7a6d72ca904a6e570e168305059c30bf66debe8; '/usr/bin/php' 'artisan' tel:createOrder --daemon; rm /apps/web/cellular-data/storage/framework/schedule-f7a6d72ca904a6e570e168305059c30bf66debe8) > '/dev/null' 2>&1
+www      17889 17887  0 17:01 ?        00:00:00 /usr/bin/php artisan tel:createOrder --daemon
+www      17948 17947  0 17:02 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      17949 17948  0 17:02 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      17963 17949  0 17:02 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-92fe80c7d58dafb391b330efff59cee55ae559dc; '/usr/bin/php' 'artisan' tel:queryOrder --daemon --groupId=1; rm /apps/web/cellular-data/storage/framework/schedule-92fe80c7d58dafb391b330efff59cee55ae559dc) > '/dev/null' 2>&1
+www      17964 17963  0 17:02 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-92fe80c7d58dafb391b330efff59cee55ae559dc; '/usr/bin/php' 'artisan' tel:queryOrder --daemon --groupId=1; rm /apps/web/cellular-data/storage/framework/schedule-92fe80c7d58dafb391b330efff59cee55ae559dc) > '/dev/null' 2>&1
+www      17966 17964  0 17:02 ?        00:00:00 /usr/bin/php artisan tel:queryOrder --daemon --groupId=1
+www      18025 18024  0 17:03 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      18026 18025  0 17:03 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      18040 18026  0 17:03 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-dee6488d61a309caedf6f5c23a809287c412b101; '/usr/bin/php' 'artisan' tel:queryOrder --daemon --groupId=60; rm /apps/web/cellular-data/storage/framework/schedule-dee6488d61a309caedf6f5c23a809287c412b101) > '/dev/null' 2>&1
+www      18041 18040  0 17:03 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-dee6488d61a309caedf6f5c23a809287c412b101; '/usr/bin/php' 'artisan' tel:queryOrder --daemon --groupId=60; rm /apps/web/cellular-data/storage/framework/schedule-dee6488d61a309caedf6f5c23a809287c412b101) > '/dev/null' 2>&1
+www      18043 18041  0 17:03 ?        00:00:00 /usr/bin/php artisan tel:queryOrder --daemon --groupId=60
+www      18102 18101  0 17:04 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      18103 18102  0 17:04 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      18117 18103  0 17:04 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-fb38357de2027bc92f69c92feff8f64dceed1d73; '/usr/bin/php' 'artisan' tel:refund; rm /apps/web/cellular-data/storage/framework/schedule-fb38357de2027bc92f69c92feff8f64dceed1d73) > '/dev/null' 2>&1
+www      18118 18117  0 17:04 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-fb38357de2027bc92f69c92feff8f64dceed1d73; '/usr/bin/php' 'artisan' tel:refund; rm /apps/web/cellular-data/storage/framework/schedule-fb38357de2027bc92f69c92feff8f64dceed1d73) > '/dev/null' 2>&1
+www      18120 18118  0 17:04 ?        00:00:00 /usr/bin/php artisan tel:refund
+www      18181 18180  0 17:05 ?        00:00:00 /bin/sh -c php /apps/web/cellular-data/artisan schedule:run >> /apps/web/cellular-data/storage/logs/schedule.log 2>&1
+www      18182 18181  0 17:05 ?        00:00:00 php /apps/web/cellular-data/artisan schedule:run
+www      18203 18182  0 17:05 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-413a4fc857d49a739f2f8a8c3e270f3792cb1a95; '/usr/bin/php' 'artisan' tel:commit --eSupplierIds=Nothing --cps=1 --ips=0; rm /apps/web/cellular-data/storage/framework/schedule-413a4fc857d49a739f2f8a8c3e270f3792cb1a95) > '/dev/null' 2>&1
+www      18204 18203  0 17:05 ?        00:00:00 sh -c (touch /apps/web/cellular-data/storage/framework/schedule-413a4fc857d49a739f2f8a8c3e270f3792cb1a95; '/usr/bin/php' 'artisan' tel:commit --eSupplierIds=Nothing --cps=1 --ips=0; rm /apps/web/cellular-data/storage/framework/schedule-413a4fc857d49a739f2f8a8c3e270f3792cb1a95) > '/dev/null' 2>&1
+www      18206 18204  0 17:05 ?        00:00:00 /usr/bin/php artisan tel:commit --eSupplierIds=Nothing --cps=1 --ips=0
+root     18297  1474  0 17:06 pts/0    00:00:00 grep --color=auto artisan
+
