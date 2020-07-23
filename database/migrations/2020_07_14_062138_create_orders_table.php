@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order_no',80)->default('')->index()->comment('订单号');
+            $table->string('order_no',80)->default('')->comment('订单号');
             $table->integer('shop_id')->default(0)->index()->comment('店铺id');
             $table->string('sale_no',80)->default('')->comment('交易号');
             $table->string('status_text',25)->default('')->comment('状态消息');
@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('pay_time')->nullable()->comment('支付时间');
             $table->timestamp('post_time')->nullable()->comment('提交时间');
             $table->timestamp('refund_time')->nullable()->comment('退款时间');
-            $table->string('pay_type',20)->default('')->comment('付款方式');
+            $table->string('pay_type',150)->default('')->comment('付款方式');
             $table->decimal('order_price',10,2)->default(0.00)->comment('订单售价');
             $table->decimal('sale_transport_price',10,2)->default(0.00)->comment('顾客支付运费');
             $table->decimal('refund_price',10,2)->default(0.00)->comment('退款金额');
@@ -49,6 +49,7 @@ class CreateOrdersTable extends Migration
             $table->string('consignee_tel',50)->default('')->comment('收货人手机');
 
             $table->tinyInteger('is_volume')->default(0)->index()->comment('是否计算过绩效 0未计算 1已计算');
+            $table->unique(['order_no']);
             $table->timestamps();
         });
     }

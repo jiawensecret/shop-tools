@@ -29,3 +29,5 @@ Route::resources([
 ]);
 
 Route::post('/excel/upload','CommonController@uploadExcel');
+
+Route::post('/profit-report','SaleVolumeController@profitReport');//计算利润

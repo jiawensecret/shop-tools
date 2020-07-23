@@ -18,7 +18,7 @@ class CreateSaleVolumeJobsTable extends Migration
             $table->string('month',10)->default('')->comment('Y-m格式');
             $table->string('exchange',25)->default(0)->comment('汇率 美元对人民币');
             $table->integer('status')->default(0)->comment('1成功 2失败');
-            $table->string('error_msg',500)->default('');
+            $table->text('error_msg')->nullable();
             $table->timestamps();
         });
     }

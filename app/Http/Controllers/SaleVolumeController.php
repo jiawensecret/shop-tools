@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfitReportRequest;
+use App\Http\Resources\SaleVolumeCollection;
+use App\Http\Resources\SaleVolumeResource;
 use App\Jobs\SaleVolume;
+use App\Model\SalesVolume;
 use App\Model\SaleVolumeJob;
 use Illuminate\Http\Request;
 
@@ -14,9 +17,13 @@ class SaleVolumeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pageSize = $request->get('page_size') ?: $this->pageSize;
+
+        $saleVolumes = SalesVolume::paginate($pageSize);
+
+        return new SaleVolumeCollection($saleVolumes);
     }
 
     /**
@@ -48,7 +55,9 @@ class SaleVolumeController extends Controller
      */
     public function show($id)
     {
-        //
+        $saleVolume = SalesVolume::find($id);
+
+        return new SaleVolumeResource($saleVolume);
     }
 
     /**

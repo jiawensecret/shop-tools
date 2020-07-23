@@ -19,7 +19,7 @@ class SaleVolume
     protected $startTime = '';
     protected $endTime = '';
 
-    protected $shopToPerson = [ 0 => 0];
+    protected $shopToPerson = [];
 
     protected $shopFee = [];
 
@@ -38,18 +38,15 @@ class SaleVolume
         $shop = $order->shop;
         if (!$shop) {
             return false;
-            throw new \RuntimeException('请完善店铺信息',4001);
         }
         $person = $shop->person;
         if (!$person) {
             return false;
-            throw new \RuntimeException('请完善人员信息',4002);
         }
 
         $account = $shop->account;
         if (!$person) {
             return false;
-            throw new \RuntimeException('请完善账号信息',4003);
         }
 
         $this->shopToPerson[$shop->id] = $person->id;
@@ -97,12 +94,13 @@ class SaleVolume
                 $cost += $item->count * $item->supplier_price;
             }
 
+            $pay_percent = $this->accountFee[$order->shop_id] ?? 0;
             $data = [
                 'order_price' => $order->order_price,
                 'month' => $this->month,
                 'cost_price' => $cost,
                 'transport_price' => $transport->sum('transport_price'),
-                'pay_charge' => round($this->accountFee[$order->shop_id] * $order->order_price,2),
+                'pay_charge' => round($pay_percent * $order->order_price,2),
                 'refund' => $order->refund_price,
             ];
 
@@ -138,7 +136,7 @@ class SaleVolume
 
     public function totalReport($exchange)
     {
-        $volumes = SaleVolumeOrderLog::where('order_price','>',0)
+        $volumes = SaleVolumeOrderLog::where('month',$this->month)
             ->select('sales_volume_id',
                 DB::raw("SUM(order_price-refund-pay_charge) * {$exchange} as volume"),
                 DB::raw('SUM(cost_price+transport_price+ad_price+shop_charge) as total_cost'),

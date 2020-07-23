@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfitReportRequest extends FormRequest
+class ShopUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class ProfitReportRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('shops');
         return [
-            'month' => 'required',
-            'exchange' => 'required|numeric',
+            'code' => 'unique:shops,code,'.$id
         ];
     }
 }

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ShopCreateRequest;
+use App\Http\Requests\ShopUpdateRequest;
+use App\Http\Resources\ShopCollection;
+use App\Http\Resources\ShopResource;
+use App\Model\Shop;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -11,9 +16,13 @@ class ShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pageSize = $request->get('page_size') ?: $this->pageSize;
+
+        $shops = Shop::paginate($pageSize);
+
+        return new ShopCollection($shops);
     }
 
     /**
@@ -32,9 +41,13 @@ class ShopController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ShopCreateRequest $request)
     {
-        //
+        $data = $request->only(['person_id','account_id','name','code','uri','desc','charge_percent']);
+
+        $shop = Shop::create($data);
+
+        return new ShopResource($shop);
     }
 
     /**
@@ -45,7 +58,9 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        //
+        $shop = Shop::find($id);
+
+        return new ShopResource($shop);
     }
 
     /**
@@ -66,9 +81,15 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ShopUpdateRequest $request, $id)
     {
-        //
+        $data = $request->only(['person_id','account_id','name','code','uri','desc','charge_percent']);
+
+        $shop = Shop::find($id);
+
+        $shop->update($data);
+
+        return new ShopResource($shop->refresh());
     }
 
     /**

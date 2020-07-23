@@ -19,6 +19,7 @@ class CreateAdPricesTable extends Migration
             $table->string('month',10)->default('')->comment('Y-m格式时间');
             $table->decimal('price',10,2)->default(0.00)->comment('广告成本');
             $table->tinyInteger('type')->default(0)->comment('0人民币 1美元');
+            $table->unique(['shop_id','month']);
             $table->timestamps();
         });
     }

@@ -39,7 +39,7 @@ class TestController extends Controller
 
         $exchange = 10;
 
-        $value = SaleVolumeOrderLog::where('order_price','>',0)
+        $value = SaleVolumeOrderLog::where('month','2020-06')
             ->select('sales_volume_id',
                 DB::raw("SUM(order_price -refund -pay_charge) * {$exchange} as volume"),
                 DB::raw('SUM(cost_price+transport_price+ad_price+shop_charge) as total_cost'),

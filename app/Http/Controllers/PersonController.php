@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonCreateRequest;
+use App\Http\Requests\PersonUpdateRequest;
 use App\Http\Resources\PersonCollection;
 use App\Http\Resources\PersonResource;
 use App\Model\Person;
@@ -39,9 +41,13 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonCreateRequest $request)
     {
-        //
+        $data = $request->only(['name','is_active']);
+
+        $person = Person::create($data);
+
+        return new PersonResource($person);
     }
 
     /**
@@ -75,9 +81,15 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PersonUpdateRequest $request, $id)
     {
-        //
+        $data = $request->only(['name','is_active']);
+
+        $person = Person::find($id);
+
+        $person->update($data);
+
+        return new PersonResource($person->refresh());
     }
 
     /**

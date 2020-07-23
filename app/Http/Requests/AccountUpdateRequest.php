@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfitReportRequest extends FormRequest
+class AccountUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class ProfitReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'month' => 'required',
-            'exchange' => 'required|numeric',
+
         ];
     }
 }

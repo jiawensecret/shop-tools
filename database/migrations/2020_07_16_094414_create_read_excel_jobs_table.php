@@ -19,7 +19,7 @@ class CreateReadExcelJobsTable extends Migration
             $table->integer('user_id')->default(0);
             $table->integer('status')->default(0)->comment('1成功 2失败');
             $table->string('type',50)->default('');
-            $table->string('error_msg',500)->default('');
+            $table->text('error_msg')->nullable();
             $table->timestamps();
         });
     }

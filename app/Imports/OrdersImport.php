@@ -101,10 +101,11 @@ class OrdersImport implements OnEachRow
                 'size' => $row[$this->map['产品规格']],
                 'pic' => $row[$this->map['图片网址']],
                 'sale_name' => $row[$this->map['商品名称']],
-                'supplier_price' => $row[$this->map['商品采购价']],
             ];
 
             $goodsData = array_filter($goodsData);
+            $goodsData['supplier_price'] = $row[$this->map['商品采购价']];
+
             $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
                 ->where('sku',$row[$this->map['SKU']])
                 ->where('pic',$row[$this->map['图片网址']])

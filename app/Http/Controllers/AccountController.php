@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountCreateRequest;
+use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Resources\AccountCollection;
 use App\Http\Resources\AccountResource;
 use App\Model\Account;
@@ -39,9 +41,13 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AccountCreateRequest $request)
     {
-        //
+        $data = $request->only(['account','account_type','password','charge_percent']);
+
+        $account = Account::create($data);
+
+        return new AccountResource($account);
     }
 
     /**
@@ -75,9 +81,15 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AccountUpdateRequest $request, $id)
     {
-        //
+        $data = $request->only(['account','account_type','password','charge_percent']);
+
+        $account = Account::find($id);
+
+        $account->update($data);
+
+        return new AccountResource($account->refresh());
     }
 
     /**

@@ -14,15 +14,15 @@ class SaleVolume implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $job;
+    protected $saleVolumeJob;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(SaleVolumeJob $job)
+    public function __construct(SaleVolumeJob $saleVolumeJob)
     {
-        $this->job = $job;
+        $this->saleVolumeJob = $saleVolumeJob;
     }
 
     /**
@@ -35,19 +35,19 @@ class SaleVolume implements ShouldQueue
         ini_set('memory_limit', '512M');
         set_time_limit(0);
         try {
-            $service =  new \App\Services\SaleVolume($this->job->month);
+            $service =  new \App\Services\SaleVolume($this->saleVolumeJob->month);
             $service->builtOrderLog();
-            $service->calculate($this->job->exchange);
-            $service->totalReport($this->job->exchange);
+            $service->calculate($this->saleVolumeJob->exchange);
+            $service->totalReport($this->saleVolumeJob->exchange);
 
-            $this->job->status = 1;
-            $this->job->save();
+            $this->saleVolumeJob->status = 1;
+            $this->saleVolumeJob->save();
 
         } catch (\Exception $exception) {
             Log::error('saleVolume error: ' . $exception->getMessage(), $exception->getTrace());
-            $this->job->status = 2;
-            $this->job->error_msg = $exception->getMessage();
-            $this->job->save();
+            $this->saleVolumeJob->status = 2;
+            $this->saleVolumeJob->error_msg = $exception->getMessage();
+            $this->saleVolumeJob->save();
         }
 
     }

@@ -26,7 +26,7 @@ class CreateOrderGoodsTable extends Migration
             $table->decimal('price',10,2)->default(0.00)->comment('产品售价');
             $table->integer('count')->default(0)->comment('产品数量');
             $table->string('size',255)->default('')->comment('商品规格');
-            $table->string('pic',255)->default('')->comment('产品图片地址');
+            $table->string('pic',500)->default('')->comment('产品图片地址');
             $table->string('sale_name',255)->default('')->comment('商品名称');
             $table->decimal('supplier_price',10,2)->default(0.00)->comment('供应价格 采购价');
 

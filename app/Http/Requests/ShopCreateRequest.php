@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfitReportRequest extends FormRequest
+class ShopCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class ProfitReportRequest extends FormRequest
     public function rules()
     {
         return [
-            'month' => 'required',
-            'exchange' => 'required|numeric',
+            'person_id' => 'required|integer',
+            'account_id' => 'required|integer',
+            'name' => 'required|string',
+            'code' => 'required|unique:shops',
+            'charge_percent' => 'numeric',
         ];
     }
 }

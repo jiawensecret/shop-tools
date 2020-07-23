@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('account_type',25)->default('');
             $table->string('password',25)->default('');
             $table->decimal('charge_percent',10,2)->default(0.00)->comment('收款手续费百分比');
+            $table->unique(['account','account_type']);
             $table->timestamps();
         });
     }

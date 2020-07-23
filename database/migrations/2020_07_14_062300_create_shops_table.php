@@ -22,6 +22,7 @@ class CreateShopsTable extends Migration
             $table->string('uri',100)->default('')->comment('');
             $table->string('desc',255)->default('')->comment('');
             $table->decimal('charge_percent',10,2)->default(0.00)->comment('店铺手续费百分比');
+            $table->unique(['code']);
             $table->timestamps();
         });
     }

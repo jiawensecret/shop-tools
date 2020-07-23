@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TransportCollection;
+use App\Http\Resources\TransportResource;
 use App\Jobs\ReadExcel;
 use App\Model\ReadExcelJob;
+use App\Model\Transport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,9 +18,13 @@ class TransportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pageSize = $request->get('page_size') ?: $this->pageSize;
+
+        $transports = Transport::paginate($pageSize);
+
+        return new TransportCollection($transports);
     }
 
     /**
@@ -49,7 +56,9 @@ class TransportController extends Controller
      */
     public function show($id)
     {
-        //
+        $transport = Transport::find($id);
+
+        return new TransportResource($transport);
     }
 
     /**
