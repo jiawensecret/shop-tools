@@ -87,7 +87,7 @@ class PersonController extends Controller
 
         $person = Person::find($id);
 
-        $person->update($data);
+        $person->update(array_filter($data));
 
         return new PersonResource($person->refresh());
     }

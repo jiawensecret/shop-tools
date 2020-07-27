@@ -87,7 +87,7 @@ class AccountController extends Controller
 
         $account = Account::find($id);
 
-        $account->update($data);
+        $account->update(array_filter($data));
 
         return new AccountResource($account->refresh());
     }

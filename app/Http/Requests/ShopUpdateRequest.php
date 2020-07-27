@@ -23,7 +23,7 @@ class ShopUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('shops');
+        $id = $this->route('shop');
         return [
             'code' => 'unique:shops,code,'.$id
         ];

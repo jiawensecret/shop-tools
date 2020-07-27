@@ -15,8 +15,11 @@ class ShopCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'code' => 200,
-            'data' => $this->collection
+            'success' => true,
+            'data' => $this->collection,
+            'current' => $this->currentPage(),
+            'pageSize' => $this->perPage(),
+            'total' => $this->total(),
         ];
     }
 }

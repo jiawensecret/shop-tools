@@ -87,7 +87,7 @@ class ShopController extends Controller
 
         $shop = Shop::find($id);
 
-        $shop->update($data);
+        $shop->update(array_filter($data));
 
         return new ShopResource($shop->refresh());
     }
