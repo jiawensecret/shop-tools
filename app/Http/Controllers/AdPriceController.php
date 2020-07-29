@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PersonCreateRequest;
-use App\Http\Requests\PersonUpdateRequest;
-use App\Http\Resources\PersonCollection;
-use App\Http\Resources\PersonResource;
+use App\Http\Resources\AdPriceCollection;
+use App\Http\Resources\AdPriceResource;
+use App\Model\AdPrice;
 use App\Model\Person;
 use Illuminate\Http\Request;
 
-class PersonController extends Controller
+class AdPriceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +19,9 @@ class PersonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $people = Person::paginate($pageSize);
+        $price = AdPrice::paginate($pageSize);
 
-        return new PersonCollection($people);
+        return new AdPriceCollection($price);
     }
 
     /**
@@ -41,13 +40,13 @@ class PersonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PersonCreateRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->only(['name','is_active']);
+        $data = $request->only(['shop_id','month','price','type']);
 
-        $person = Person::create($data);
+        $price = AdPrice::create($data);
 
-        return new PersonResource($person);
+        return new AdPriceResource($price);
     }
 
     /**
@@ -58,9 +57,7 @@ class PersonController extends Controller
      */
     public function show($id)
     {
-        $person = Person::find($id);
-
-        return new PersonResource($person);
+        //
     }
 
     /**
@@ -81,15 +78,15 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PersonUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->only(['name','is_active']);
+        $data = $request->only(['shop_id','month','price','type']);
 
-        $person = Person::find($id);
+        $price = AdPrice::find($id);
 
-        $person->update($data);
+        $price->update($data);
 
-        return new PersonResource($person->refresh());
+        return new AdPriceResource($price->refresh());
     }
 
     /**

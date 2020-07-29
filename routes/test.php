@@ -18,15 +18,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['test']],function (){
+    Route::resources([
+        'orders' => 'OrderController',
+        'transports' => 'TransportController',
+        'person' => 'PersonController',
+        'shops' => 'ShopController',
+        'accounts' => 'AccountController',
+        'ad-prices' => 'AdPriceController',
+    ]);
 
-Route::resources([
-    'orders' => 'OrderController',
-    'transports' => 'TransportController',
-    'person' => 'PersonController',
-    'shops' => 'ShopController',
-    'accounts' => 'AccountController',
-]);
+    Route::post('/excel/upload','CommonController@uploadExcel');
 
-Route::post('/excel/upload','CommonController@uploadExcel');
+    Route::post('/profit-report','SaleVolumeController@profitReport');//计算利润
 
-Route::post('/profit-report','SaleVolumeController@profitReport');//计算利润
+    Route::get('/show-excel-job','CommonController@showExcelJob');
+    Route::get('/show-calculate-job','CommonController@showCalculateJob');
+
+    Route::get('/month-list','CommonController@monthList');
+
+});
+
