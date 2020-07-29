@@ -8,6 +8,7 @@ class SalesVolume extends Model
 {
     //
     protected $guarded = ['id'];
+    protected $appends = ['person_name'];
 
     public function person()
     {
@@ -17,6 +18,11 @@ class SalesVolume extends Model
     public function log()
     {
         return $this->hasMany(SaleVolumeOrderLog::class);
+    }
+
+    public function getPersonNameAttribute($value)
+    {
+        return $this->person->name ?? '';
     }
 
 

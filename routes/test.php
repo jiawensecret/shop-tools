@@ -26,6 +26,7 @@ Route::group(['middleware' => ['test']],function (){
         'shops' => 'ShopController',
         'accounts' => 'AccountController',
         'ad-prices' => 'AdPriceController',
+        'sale-volumes'=>'SaleVolumeController'
     ]);
 
     Route::post('/excel/upload','CommonController@uploadExcel');
