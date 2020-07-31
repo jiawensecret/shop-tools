@@ -55,7 +55,7 @@ class CommonController extends Controller
     {
         $res = [];
         for ($i = 0; $i < 12; $i++) {
-            $res[] = Carbon::now()->subMonths($i)->format('Y-m');
+            $res[] = Carbon::now()->firstOfMonth()->subMonths($i)->format('Y-m');
         }
 
         return new CommonColletction($res);

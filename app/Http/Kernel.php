@@ -47,6 +47,8 @@ class Kernel extends HttpKernel
         ],
 
         'test' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Session\Middleware\StartSession::class,
             ReactMiddleware::class,
             CrossResponseMiddle::class
         ],

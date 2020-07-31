@@ -29,7 +29,7 @@ class SaleVolume
     public function __construct($month)
     {
         $this->month = $month;
-        $this->startTime = $startTime = Carbon::parse($month)->toDateTimeString();
+        $this->startTime = Carbon::parse($month)->subMonths(3)->toDateTimeString();
         $this->endTime = Carbon::parse($month)->addMonth()->toDateTimeString();
     }
 
