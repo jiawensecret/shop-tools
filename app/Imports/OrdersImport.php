@@ -108,7 +108,6 @@ class OrdersImport implements OnEachRow
 
             $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
                 ->where('sku',$row[$this->map['SKU']])
-                ->where('pic',$row[$this->map['图片网址']])
                 ->first();
 
             if ($orderGoods) {
