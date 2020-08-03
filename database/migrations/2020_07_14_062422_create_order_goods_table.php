@@ -30,7 +30,7 @@ class CreateOrderGoodsTable extends Migration
             $table->string('sale_name',255)->default('')->comment('商品名称');
             $table->decimal('supplier_price',10,2)->default(0.00)->comment('供应价格 采购价');
 
-            $table->unique(['order_no','sku']);
+            //$table->unique(['order_no','sku']);
             $table->timestamps();
         });
     }
