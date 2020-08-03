@@ -83,7 +83,7 @@ class AccountController extends Controller
      */
     public function update(AccountUpdateRequest $request, $id)
     {
-        $data = $request->only(['account','account_type','password','charge_percent']);
+        $data = $request->only(['account','account_type','password','charge_percent','client_id','client_password']);
 
         $account = Account::find($id);
 
