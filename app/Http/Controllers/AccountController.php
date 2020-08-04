@@ -20,7 +20,7 @@ class AccountController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $accounts = Account::paginate($pageSize);
+        $accounts = Account::orderBy('id','desc')->paginate($pageSize);
 
         return new AccountCollection($accounts);
     }

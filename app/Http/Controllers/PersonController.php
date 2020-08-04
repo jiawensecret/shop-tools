@@ -20,7 +20,7 @@ class PersonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $people = Person::paginate($pageSize);
+        $people = Person::orderBy('id','desc')->paginate($pageSize);
 
         return new PersonCollection($people);
     }

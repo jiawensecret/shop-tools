@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $order = Order::paginate($pageSize);
+        $order = Order::orderBy('pay_time','desc')->paginate($pageSize);
 
         return new OrderCollection($order);
     }

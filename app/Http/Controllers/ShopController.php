@@ -20,7 +20,7 @@ class ShopController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $shops = Shop::paginate($pageSize);
+        $shops = Shop::orderBy('id','desc')->paginate($pageSize);
 
         return new ShopCollection($shops);
     }

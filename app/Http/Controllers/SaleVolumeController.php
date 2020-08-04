@@ -21,7 +21,7 @@ class SaleVolumeController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $saleVolumes = SalesVolume::paginate($pageSize);
+        $saleVolumes = SalesVolume::orderBy('id','desc')->paginate($pageSize);
 
         return new SaleVolumeCollection($saleVolumes);
     }

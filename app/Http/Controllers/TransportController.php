@@ -22,7 +22,7 @@ class TransportController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $transports = Transport::paginate($pageSize);
+        $transports = Transport::orderBy('id','desc')->paginate($pageSize);
 
         return new TransportCollection($transports);
     }

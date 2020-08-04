@@ -37,7 +37,7 @@ class CommonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $jobs = ReadExcelJob::paginate($pageSize);
+        $jobs = ReadExcelJob::orderBy('id','desc')->paginate($pageSize);
 
         return new ExcelJobCollection($jobs);
     }
@@ -46,7 +46,7 @@ class CommonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $jobs = SaleVolumeJob::paginate($pageSize);
+        $jobs = SaleVolumeJob::orderBy('id','desc')->paginate($pageSize);
 
         return new VolumeJobCollection($jobs);
     }

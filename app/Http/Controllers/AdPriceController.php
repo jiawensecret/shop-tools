@@ -19,7 +19,7 @@ class AdPriceController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $price = AdPrice::paginate($pageSize);
+        $price = AdPrice::orderBy('id','desc')->paginate($pageSize);
 
         return new AdPriceCollection($price);
     }
