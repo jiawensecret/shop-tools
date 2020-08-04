@@ -112,10 +112,8 @@ class OrdersImport implements OnEachRow
 
             if ($orderGoods) {
                 //if ($orderGoods->created_at > Carbon::now()->subMinutes(20)) WarningOrderGoods::create($goodsData);
-                if ($orderGoods->created_at > Carbon::now()->subMinutes(3)) {
-                    WarningOrderGoods::create($goodsData);
+                if ($orderGoods->created_at > Carbon::now()->subMinutes(1)) {
                     $goodsData['count'] += $orderGoods->count;
-                    $goodsData['supplier_price'] += $orderGoods->supplier_price;
                 } else {
                     unset($goodsData['count']);
                 }
