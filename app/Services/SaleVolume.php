@@ -119,6 +119,7 @@ class SaleVolume
             $count = SaleVolumeOrderLog::where('month',$this->month)
                 ->where('shop_id',$price->shop_id)
                 ->count();
+            if (!$count) continue;
 
             $perPrice = round($price->price / $count);
             if ($price->type == 1) $perPrice = round($perPrice * $exchange);
