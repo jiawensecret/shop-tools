@@ -62,6 +62,7 @@ class SaleVolume
             ->where('pay_time','<', $this->endTime)
             ->where('is_volume',Order::NOT_VOLUME)
             ->get();
+        dd($orders);
 
         foreach ($orders as $order) {
 

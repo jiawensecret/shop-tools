@@ -19,9 +19,7 @@ class TestController extends Controller
 {
     public function index(){
 
-        $month = '2020-07';
-        $a = Carbon::parse($month)->subMonths(3)->toDateTimeString();
-        dd($a);
+        $month = '2020-06';
         $service =  new SaleVolume($month);
         $service->builtOrderLog();
 

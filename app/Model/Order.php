@@ -10,6 +10,7 @@ class Order extends Model
         NOT_VOLUME = 0;
 
     protected $guarded = ['id'];
+    protected $appends = ['order_goods','transport_info'];
 
     public function goods() {
         return $this->hasMany(OrderGoods::class);
@@ -22,6 +23,16 @@ class Order extends Model
 
     public function shop(){
         return $this->belongsTo(Shop::class);
+    }
+
+    public function getOrderGoodsAttribute($value)
+    {
+        return $this->goods;
+    }
+
+    public function getTransportInfoAttribute($value)
+    {
+        return $this->transport;
     }
 
 
