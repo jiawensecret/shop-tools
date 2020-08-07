@@ -104,7 +104,7 @@ class OrdersImport implements OnEachRow
             ];
 
             $goodsData = array_filter($goodsData);
-            $goodsData['supplier_price'] = $row[$this->map['商品采购价']];
+            $goodsData['supplier_price'] = $row[$this->map['商品采购价']] ?: 0;
 
             $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
                 ->where('sku',$row[$this->map['SKU']])
