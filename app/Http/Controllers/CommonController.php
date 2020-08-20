@@ -37,7 +37,11 @@ class CommonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $jobs = ReadExcelJob::orderBy('id','desc')->paginate($pageSize);
+        $query = ReadExcelJob::orderBy('id','desc');
+        if ($status = $request->get('status','')) {
+            $query->where('status',$status);
+        }
+        $jobs = $query->paginate($pageSize);
 
         return new ExcelJobCollection($jobs);
     }
@@ -46,7 +50,17 @@ class CommonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $jobs = SaleVolumeJob::orderBy('id','desc')->paginate($pageSize);
+        $query = SaleVolumeJob::orderBy('id','desc');
+
+        if ($month = $request->get('month','')) {
+            $query->where('month',$month);
+        }
+
+        if ($status = $request->get('status','')) {
+            $query->where('status',$status);
+        }
+
+        $jobs = $query->paginate($pageSize);
 
         return new VolumeJobCollection($jobs);
     }

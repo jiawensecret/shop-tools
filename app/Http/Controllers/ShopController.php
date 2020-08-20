@@ -20,7 +20,20 @@ class ShopController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $shops = Shop::orderBy('id','desc')->paginate($pageSize);
+        $data = $request->only(['name','code']);
+
+        $where = [];
+        foreach ($data as $key=>$value){
+            if (!$value) continue;
+            $where[] = [$key,'like',$value.'%'];
+        }
+
+        $query = Shop::orderBy('id','desc');
+        if ($where) {
+            $query->where($where);
+        }
+
+        $shops = $query->paginate($pageSize);
 
         return new ShopCollection($shops);
     }
@@ -43,7 +56,10 @@ class ShopController extends Controller
      */
     public function store(ShopCreateRequest $request)
     {
-        $data = $request->only(['person_id','account_id','name','code','uri','desc','charge_percent']);
+        $data = $request->only([
+            'person_id','account_id','name','code','uri','desc',
+            'charge_percent','dxm_id','client_id','client_password'
+        ]);
 
         $shop = Shop::create($data);
 
@@ -83,7 +99,10 @@ class ShopController extends Controller
      */
     public function update(ShopUpdateRequest $request, $id)
     {
-        $data = $request->only(['person_id','account_id','name','code','uri','desc','charge_percent']);
+        $data = $request->only([
+            'person_id','account_id','name',
+            'code','uri','desc','charge_percent','dxm_id','client_id','client_password'
+        ]);
 
         $shop = Shop::find($id);
 

@@ -20,7 +20,14 @@ class PersonController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $people = Person::orderBy('id','desc')->paginate($pageSize);
+        $query = Person::orderBy('id','desc');
+
+        $name = $request->get('name');
+        if ($name) {
+            $query->where('name','like',$name.'%');
+        }
+
+        $people = $query->paginate($pageSize);
 
         return new PersonCollection($people);
     }

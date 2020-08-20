@@ -7,7 +7,9 @@ use App\Imports\TransportPriceImport;
 use App\Imports\TransportsImport;
 use App\Model\Order;
 use App\Model\SaleVolumeOrderLog;
+use App\Model\Shop;
 use App\Services\SaleVolume;
+use App\Services\Shopify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,11 +20,26 @@ use Maatwebsite\Excel\Facades\Excel;
 class TestController extends Controller
 {
     public function index(){
+        $shop = Shop::find(2);
+       // try {
+            $model = new Shopify($shop);
 
-        $month = '2020-06';
-        $service =  new SaleVolume($month);
-        $service->builtOrderLog();
+            [$data,$url] = $model->getOrders(Carbon::now()->subMonths(3)->toDateTimeString());
 
+            foreach($data as $item){
+                $model->dealOrder($item);
+            }
+            while($url) {
+                [$data,$url] = $model->getOrdersByUrl($url);
+
+                foreach($data as $item){
+                    $model->dealOrder($item);
+                }
+                dump(Carbon::now()->toDateTimeString().':'.$url);
+            }
+//        } catch (\Exception $exception) {
+//            echo 111;
+//        }
 
 
 

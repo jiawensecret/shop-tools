@@ -19,7 +19,25 @@ class OrderController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $order = Order::orderBy('pay_time','desc')->paginate($pageSize);
+        $query = Order::orderBy('pay_time','desc');
+
+        if ($orderNo = $request->get('order_no','')) {
+            $query->where('order_no','like',$orderNo.'%');
+        }
+
+        if ($payType = $request->get('pay_type','')) {
+            $query->where('pay_type',$payType);
+        }
+
+        if ($statusText = $request->get('status_text','')) {
+            $query->where('status_text',$statusText);
+        }
+
+        if ($isVolume = $request->get('is_volume','')) {
+            $query->where('is_volume',$isVolume);
+        }
+
+        $order = $query->paginate($pageSize);
 
         return new OrderCollection($order);
     }

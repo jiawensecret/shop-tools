@@ -21,7 +21,19 @@ class SaleVolumeController extends Controller
     {
         $pageSize = $request->get('page_size') ?: $this->pageSize;
 
-        $saleVolumes = SalesVolume::orderBy('id','desc')->paginate($pageSize);
+        $query = SalesVolume::orderBy('id','desc');
+
+        if ($personName = $request->get('person_name','')) {
+            $query->whereHas('person',function ($q) use ($personName){
+                $q->where('name','like',$personName.'%');
+            });
+        }
+
+        if ($month = $request->get('month','')) {
+            $query->where('month',$month);
+        }
+
+        $saleVolumes = $query->paginate($pageSize);
 
         return new SaleVolumeCollection($saleVolumes);
     }
