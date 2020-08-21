@@ -76,6 +76,17 @@ class Shopify
         return [$data['orders'], $nextUrl];
     }
 
+    public function getShippingByOrder($orderId)
+    {
+        $url = sprintf(config('shopify.shipping'), $this->code,$orderId);
+
+        $this->setHeader();
+        $res = \Requests::get($url, $this->header,['timeout' => 65, 'connect_timeout' => 10]);
+
+        $data = json_decode($res->body, true);
+        return $data['fulfillments'];
+    }
+
     public function dealOrder($data)
     {
         $orderData = [
@@ -141,6 +152,31 @@ class Shopify
                 'order_no' => $orderData['order_no'],
                 'sku' => $item['sku']
             ],$goodsData);
+        }
+    }
+
+    public function dealShipping(Order $order,$data)
+    {
+        foreach($data as $value) {
+            $info = [
+                'transport_no' => $value['tracking_number'],
+                'order_no' => $order->order_no,
+                'transport_name' => $value['tracking_company'],
+                'status_text' => $value['shipment_status'],
+                'status' => ($value['shipment_status'] == 'delivered') ? 6: 0,
+                'shopify_fulfillment_id' => $value['id'],
+                'shopify_fulfillment_status' => $value['status'],
+                'order_id' => $order->id,
+            ];
+
+            $order->transport()->updateOrCreate([
+                'shopify_fulfillment_id' => $value['id'],
+            ],$info);
+
+            if ($info['status'] == 6) {
+                $order->shipping_status = 1;
+                $order->save();
+            }
         }
     }
 

@@ -22,6 +22,7 @@ class ShopifyApiModify extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('shopify_order_id',25)->default('')->comment('');
             $table->string('checkout_id',25)->default('')->comment('');
+            $table->tinyInteger('shipping_status')->default(0)->comment('');
         });
 
         Schema::table('order_goods', function (Blueprint $table) {
@@ -44,6 +45,8 @@ class ShopifyApiModify extends Migration
 
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('shopify_order_id');
+            $table->dropColumn('checkout_id');
+            $table->dropColumn('shipping_status');
         });
 
         Schema::table('order_goods', function (Blueprint $table) {

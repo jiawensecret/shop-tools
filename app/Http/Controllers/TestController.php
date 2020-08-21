@@ -24,19 +24,11 @@ class TestController extends Controller
        // try {
             $model = new Shopify($shop);
 
-            [$data,$url] = $model->getOrders(Carbon::now()->subMonths(3)->toDateTimeString());
+            $order = Order::find(1100);
 
-            foreach($data as $item){
-                $model->dealOrder($item);
-            }
-            while($url) {
-                [$data,$url] = $model->getOrdersByUrl($url);
-
-                foreach($data as $item){
-                    $model->dealOrder($item);
-                }
-                dump(Carbon::now()->toDateTimeString().':'.$url);
-            }
+            $data = $model->getShippingByOrder('2159708569734');
+            $model->dealShipping($order,$data);
+            dd($data);
 //        } catch (\Exception $exception) {
 //            echo 111;
 //        }
