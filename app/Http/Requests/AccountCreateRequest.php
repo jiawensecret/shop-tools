@@ -26,7 +26,7 @@ class AccountCreateRequest extends FormRequest
         return [
             'account' => 'required',
             'account_type' => 'required',
-            'charge_percent' => 'required|numeric'
+           // 'charge_percent' => 'required|numeric'
         ];
     }
 }

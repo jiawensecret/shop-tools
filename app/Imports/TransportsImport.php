@@ -25,8 +25,7 @@ class TransportsImport implements OnEachRow
         } else {
             $statusMap = array_flip(Transport::STATUS_MAP);
 
-            $transport = Transport::where('package_code',$row[$this->map['包裹号']])
-                ->where('order_no',$row[$this->map['订单号']])
+            $transport = Transport::where('order_no',$row[$this->map['订单号']])
                 ->first();
 
             $data = [

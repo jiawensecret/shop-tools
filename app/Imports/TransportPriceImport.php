@@ -22,8 +22,7 @@ class TransportPriceImport implements OnEachRow
         if ($row[0] == '发货日期') {
             $this->map = array_flip($row);
         } else {
-            $transport = Transport::where('package_code',$row[$this->map['包裹号']])
-                ->where('transport_no',$row[$this->map['运单号']])
+            $transport = Transport::where('transport_no',$row[$this->map['运单号']])
                 ->first();
 
             if ($transport) {

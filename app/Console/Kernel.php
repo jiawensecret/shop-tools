@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\GetOrdersFromShopify;
+use App\Console\Commands\ShopifyPayment;
+use App\Console\Commands\ShopifyShipping;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +16,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        GetOrdersFromShopify::class,
+        ShopifyPayment::class,
+        ShopifyShipping::class
     ];
 
     /**
@@ -24,7 +29,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('shopify:orders')->twiceDaily(1,13);
+        $schedule->command('shopify:shipping')->dailyAt('9:00');
+        $schedule->command('shopify:payment')->dailyAt('5:00');
     }
 
     /**

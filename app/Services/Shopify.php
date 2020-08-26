@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Model\Order;
 use App\Model\Shop;
+use Carbon\Carbon;
 
 class Shopify
 {
@@ -32,7 +33,7 @@ class Shopify
         $this->header = ['X-Shopify-Access-Token' => $this->clientSecret];
     }
 
-    public function getOrders($startTime,$limit = 100)
+    public function getOrders($startTime, $limit = 100)
     {
         $query = [
             'limit' => $limit,
@@ -43,7 +44,7 @@ class Shopify
         $url = sprintf(config('shopify.orders'), $this->code) . http_build_query($query);
         $this->setHeader();
 
-        $res = \Requests::get($url, $this->header,['timeout' => 65, 'connect_timeout' => 10]);
+        $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
 
         preg_match("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
@@ -59,7 +60,7 @@ class Shopify
 
     public function getOrdersByUrl($url)
     {
-        $res = \Requests::get($url, $this->header,['timeout' => 65, 'connect_timeout' => 10]);
+        $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
 
         preg_match_all("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
@@ -78,13 +79,24 @@ class Shopify
 
     public function getShippingByOrder($orderId)
     {
-        $url = sprintf(config('shopify.shipping'), $this->code,$orderId);
+        $url = sprintf(config('shopify.shipping'), $this->code, $orderId);
 
         $this->setHeader();
-        $res = \Requests::get($url, $this->header,['timeout' => 65, 'connect_timeout' => 10]);
+        $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
 
         $data = json_decode($res->body, true);
         return $data['fulfillments'];
+    }
+
+    public function getPaymentByOrder($orderId)
+    {
+        $url = sprintf(config('shopify.payment'),$this->code,$orderId);
+
+        $this->setHeader();
+        $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
+
+        $data = json_decode($res->body, true);
+        return $data['transactions'];
     }
 
     public function dealOrder($data)
@@ -177,6 +189,17 @@ class Shopify
                 $order->shipping_status = 1;
                 $order->save();
             }
+        }
+    }
+
+    public function dealPayment(Order $order,$data)
+    {
+        foreach ($data as $value) {
+            $order->sale_no = $value['authorization'];
+            $order->fee_amount = $value['receipt']['fee_amount'] ?? 0;
+            $order->pay_time = Carbon::parse($value['receipt']['payment_date'])->toDateTimeString();
+            $order->is_transactions = 1;
+            $order->save();
         }
     }
 
