@@ -107,8 +107,8 @@ class Shopify
 
             'status_text' => $data['financial_status'],
             'channel' => 'shopify',
-            'order_time' => $data['created_at'],
-            'pay_time' => $data['processed_at'],
+            'order_time' => Carbon::parse($data['created_at'])->toDateTimeString(),
+            'pay_time' => Carbon::parse($data['created_at'])->toDateTimeString(),
 
             'pay_type' => $data['gateway'] ?: '',
             'order_price' => $data['total_price'] ?: '',
