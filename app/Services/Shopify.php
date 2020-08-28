@@ -154,7 +154,7 @@ class Shopify
             $goodsData = [
                 'order_id' => $order->id,
                 'order_no' => $orderData['order_no'],
-                'sku' => $item['sku'] ?: '',
+                'sku' => empty($item['sku']) ? '' : $item['sku'],
                 'count' => $item['quantity'] ?: 1,
                 'product_no' => $item['product_id'],
                 'product_code' => $item['variant_id'],
