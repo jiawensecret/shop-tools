@@ -154,7 +154,6 @@ class Shopify
             $goodsData = [
                 'order_id' => $order->id,
                 'order_no' => $orderData['order_no'],
-                'sku' => empty($item['sku']) ? '' : $item['sku'],
                 'count' => $item['quantity'] ?: 1,
                 'product_no' => $item['product_id'],
                 'product_code' => $item['variant_id'],
@@ -165,10 +164,13 @@ class Shopify
             ];
             $goodsData = array_filter($goodsData);
 
+            $sku = empty($item['sku']) ? '' : $item['sku'];
+            $goodsData['sku'] = $sku;
+
             $order->goods()->updateOrCreate([
                 'order_id' => $order->id,
                 'order_no' => $orderData['order_no'],
-                'sku' => $item['sku']
+                'sku' => $sku
             ],$goodsData);
         }
     }
