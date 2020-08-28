@@ -75,6 +75,9 @@ class Shopify
             $nextUrl = '';
         }
 
+        Log::info('【orders】 link:'.json_encode($res->headers['link']));
+        Log::info('【orders】 url:'.$nextUrl);
+
         $data = json_decode($res->body, true);
 
         return [$data['orders'], $nextUrl];
