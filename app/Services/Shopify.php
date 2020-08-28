@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Model\Order;
 use App\Model\Shop;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Shopify
 {
@@ -43,6 +44,8 @@ class Shopify
 
         $url = sprintf(config('shopify.orders'), $this->code) . http_build_query($query);
         $this->setHeader();
+
+        Log::info('【orders】 url:'.$url);
 
         $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
 
@@ -173,8 +176,8 @@ class Shopify
             $info = [
                 'transport_no' => $value['tracking_number'],
                 'order_no' => $order->order_no,
-                'transport_name' => $value['tracking_company'],
-                'status_text' => $value['shipment_status'],
+                'transport_name' => $value['tracking_company'] ?: '',
+                'status_text' => $value['shipment_status'] ?: '',
                 'status' => ($value['shipment_status'] == 'delivered') ? 6: 0,
                 'shopify_fulfillment_id' => $value['id'],
                 'shopify_fulfillment_status' => $value['status'],
