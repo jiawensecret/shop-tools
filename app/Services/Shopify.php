@@ -34,12 +34,11 @@ class Shopify
         $this->header = ['X-Shopify-Access-Token' => $this->clientSecret];
     }
 
-    public function getOrders($startTime, $limit = 100)
+    public function getOrders($startTime, $limit = 240)
     {
         $query = [
             'limit' => $limit,
             'created_at_min' => $startTime,
-            'status' => 'any',
         ];
 
         $url = sprintf(config('shopify.orders'), $this->code) . http_build_query($query);
@@ -53,7 +52,7 @@ class Shopify
 
 
         $url = $match[0] ?? '';
-
+        Log::info('【orders】 url:'.$url);
 
         $data = json_decode($res->body, true);
 
@@ -151,8 +150,8 @@ class Shopify
             $goodsData = [
                 'order_id' => $order->id,
                 'order_no' => $orderData['order_no'],
-                'sku' => $item['sku'],
-                'count' => $item['quantity'],
+                'sku' => $item['sku'] ?: '',
+                'count' => $item['quantity'] ?: 1,
                 'product_no' => $item['product_id'],
                 'product_code' => $item['variant_id'],
                 'product_name' => $item['name'],
