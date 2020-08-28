@@ -29,7 +29,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('shopify:orders')->twiceDaily(1,13);
+        //$schedule->command('shopify:orders')->twiceDaily(1,13);
+        $schedule->command('shopify:orders')->everySixHours();
         $schedule->command('shopify:shipping')->dailyAt('9:00');
         $schedule->command('shopify:payment')->dailyAt('5:00');
     }
