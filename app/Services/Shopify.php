@@ -39,6 +39,7 @@ class Shopify
         $query = [
             'limit' => $limit,
             'created_at_min' => $startTime,
+            'status' => 'any',
         ];
 
         $url = sprintf(config('shopify.orders'), $this->code) . http_build_query($query);
