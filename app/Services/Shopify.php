@@ -63,7 +63,7 @@ class Shopify
 
     public function getOrdersByUrl($url)
     {
-        $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
+        $res = \Requests::get($url, $this->header, ['timeout' => 650, 'connect_timeout' => 100]);
 
         preg_match_all("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
