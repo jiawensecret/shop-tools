@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Model\Shop;
 use App\Services\Shopify;
+use App\SystemShopifyLog;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -53,7 +54,12 @@ class GetOrdersFromShopify extends Command
                     $model->dealOrder($item);
                 }
                 while($url) {
-                    [$data,$url] = $model->getOrdersByUrl($url);
+                    $shopifyLog = SystemShopifyLog::create([
+                        'url' => $url,
+                        'command' => $this->signature,
+                        'shop_id' => $shop->id,
+                    ]);
+                    [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
 
                     foreach($data as $item){
                         $model->dealOrder($item);

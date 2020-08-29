@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Model\Order;
 use App\Model\Shop;
+use App\SystemShopifyLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -61,9 +62,17 @@ class Shopify
 
     }
 
-    public function getOrdersByUrl($url)
+    public function getOrdersByUrl($url,SystemShopifyLog $shopifyLog)
     {
-        $res = \Requests::get($url, $this->header, ['timeout' => 650, 'connect_timeout' => 100]);
+        try {
+            $res = \Requests::get($url, $this->header, ['timeout' => 650, 'connect_timeout' => 100]);
+            $shopifyLog->is_success = 1;
+            $shopifyLog->save();
+        } catch (\Exception $exception) {
+            $shopifyLog->is_success = 2;
+            $shopifyLog->save();
+            return [];
+        }
 
         preg_match_all("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
