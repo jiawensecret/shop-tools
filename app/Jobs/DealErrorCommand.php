@@ -41,7 +41,7 @@ class DealErrorCommand implements ShouldQueue
             $shop = Shop::find($this->log->shop_id);
             $model = new Shopify($shop);
 
-            [$data,$url] = $model->getOrders(Carbon::now()->subMonths(3)->toDateTimeString());
+            [$data,$url] = $model->getOrdersByUrl($this->log->url,$this->log);
 
             foreach($data as $item){
                 $model->dealOrder($item);
