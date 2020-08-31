@@ -24,15 +24,18 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         //$schedule->command('shopify:orders')->twiceDaily(1,13);
-        $schedule->command('shopify:orders')->everySixHours();
-        $schedule->command('shopify:shipping')->dailyAt('9:00');
-        $schedule->command('shopify:payment')->dailyAt('5:00');
+        for ($i = 0; $i < 10; $i++) {
+            $schedule->command("shopify:orders --pid={$i}")->everySixHours();
+            $schedule->command("shopify:shipping --pid={$i}")->dailyAt('9:00');
+            $schedule->command("shopify:payment --pid={$i}")->dailyAt('5:00');
+        }
+
     }
 
     /**
@@ -42,7 +45,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

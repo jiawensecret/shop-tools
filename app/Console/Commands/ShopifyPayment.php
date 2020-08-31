@@ -15,7 +15,7 @@ class ShopifyPayment extends Command
      *
      * @var string
      */
-    protected $signature = 'shopify:payment';
+    protected $signature = 'shopify:payment {--pid=}';
 
     /**
      * The console command description.
@@ -44,6 +44,7 @@ class ShopifyPayment extends Command
         $shops = Shop::all();
         foreach ($shops as $shop) {
             if (empty($shop->client_password) || empty($shop->dxm_id)) continue;
+            if (is_null($this->option('pid')) || ($shop->id % 10 != $this->option('pid'))) continue;
 
             $model = new Shopify($shop);
             Order::where('shop_id', $shop->id)

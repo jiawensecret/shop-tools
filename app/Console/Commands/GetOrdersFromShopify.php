@@ -16,7 +16,7 @@ class GetOrdersFromShopify extends Command
      *
      * @var string
      */
-    protected $signature = 'shopify:orders';
+    protected $signature = 'shopify:orders {--pid=}';
 
     /**
      * The console command description.
@@ -45,6 +45,7 @@ class GetOrdersFromShopify extends Command
         $shops = Shop::all();
         foreach ($shops as $shop) {
             if (empty($shop->client_password) || empty($shop->dxm_id)) continue;
+            if (is_null($this->option('pid')) || ($shop->id % 10 != $this->option('pid'))) continue;
             try {
                 $model = new Shopify($shop);
 
@@ -58,6 +59,7 @@ class GetOrdersFromShopify extends Command
                         'url' => $url,
                         'command' => $this->signature,
                         'shop_id' => $shop->id,
+                        'pid' => intval($this->option('pid')) ?: 0
                     ]);
                     [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
 

@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Jobs\DealErrorCommand;
 use App\Model\Order;
 use App\Model\Shop;
 use App\SystemShopifyLog;
@@ -71,7 +72,8 @@ class Shopify
         } catch (\Exception $exception) {
             $shopifyLog->is_success = 2;
             $shopifyLog->save();
-            return [];
+            dispatch(new DealErrorCommand($shopifyLog));
+            return [[],''];
         }
 
         preg_match_all("/(?<=\<)[^>]+/", $res->headers['link'], $match);
