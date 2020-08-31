@@ -66,7 +66,7 @@ class Shopify
     public function getOrdersByUrl($url,SystemShopifyLog $shopifyLog)
     {
         try {
-            $res = \Requests::get($url, $this->header, ['timeout' => 650, 'connect_timeout' => 100]);
+            $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
             $shopifyLog->is_success = 1;
             $shopifyLog->save();
         } catch (\Exception $exception) {
