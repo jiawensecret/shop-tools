@@ -47,7 +47,6 @@ class OrdersImport implements OnEachRow
 
             $orderData = [
                 'order_no' => $row[$this->map['订单号']],
-                'shop_id' => $shopId,
                 'sale_no' => $row[$this->map['交易号']],
                 'status_text' => $row[$this->map['订单状态']],
                 'channel' => $row[$this->map['平台渠道']],
@@ -81,8 +80,6 @@ class OrdersImport implements OnEachRow
             $orderData = array_filter($orderData);
             if ($order) {
                 $order->update($orderData);
-            } else {
-                $order = Order::create($orderData);
             }
 
             $order = $order->refresh();
@@ -111,15 +108,7 @@ class OrdersImport implements OnEachRow
                 ->first();
 
             if ($orderGoods) {
-                //if ($orderGoods->created_at > Carbon::now()->subMinutes(20)) WarningOrderGoods::create($goodsData);
-                if ($orderGoods->created_at > Carbon::now()->subMinutes(1)) {
-                    $goodsData['count'] += $orderGoods->count;
-                } else {
-                    unset($goodsData['count']);
-                }
                 $orderGoods->update($goodsData);
-            } else {
-                OrderGoods::create($goodsData);
             }
 //            $order->goods()->updateOrCreate($goodsData);
         }
