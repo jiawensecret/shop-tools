@@ -80,37 +80,36 @@ class OrdersImport implements OnEachRow
             $orderData = array_filter($orderData);
             if ($order) {
                 $order->update($orderData);
+
+                $order = $order->refresh();
+
+                $goodsData = [
+                    'order_id' => $order->id,
+                    'order_no' => $row[$this->map['订单号']],
+                    'package_code' => $row[$this->map['包裹号']],
+                    'transport_no' => $row[$this->map['运单号']],
+                    'sku' => $row[$this->map['SKU']],
+                    'product_no' => $row[$this->map['产品ID']],
+                    'product_code' => $row[$this->map['商品编码']],
+                    'product_name' => $row[$this->map['产品名称']],
+                    'price' => $row[$this->map['产品售价']],
+                    'count' => $row[$this->map['产品数量']],
+                    'size' => $row[$this->map['产品规格']],
+                    'pic' => $row[$this->map['图片网址']],
+                    'sale_name' => $row[$this->map['商品名称']],
+                ];
+
+                $goodsData = array_filter($goodsData);
+                $goodsData['supplier_price'] = $row[$this->map['商品采购价']] ?: 0;
+
+                $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
+                    ->where('sku',$row[$this->map['SKU']])
+                    ->first();
+
+                if ($orderGoods) {
+                    $orderGoods->update($goodsData);
+                }
             }
-
-            $order = $order->refresh();
-
-            $goodsData = [
-                'order_id' => $order->id,
-                'order_no' => $row[$this->map['订单号']],
-                'package_code' => $row[$this->map['包裹号']],
-                'transport_no' => $row[$this->map['运单号']],
-                'sku' => $row[$this->map['SKU']],
-                'product_no' => $row[$this->map['产品ID']],
-                'product_code' => $row[$this->map['商品编码']],
-                'product_name' => $row[$this->map['产品名称']],
-                'price' => $row[$this->map['产品售价']],
-                'count' => $row[$this->map['产品数量']],
-                'size' => $row[$this->map['产品规格']],
-                'pic' => $row[$this->map['图片网址']],
-                'sale_name' => $row[$this->map['商品名称']],
-            ];
-
-            $goodsData = array_filter($goodsData);
-            $goodsData['supplier_price'] = $row[$this->map['商品采购价']] ?: 0;
-
-            $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
-                ->where('sku',$row[$this->map['SKU']])
-                ->first();
-
-            if ($orderGoods) {
-                $orderGoods->update($goodsData);
-            }
-//            $order->goods()->updateOrCreate($goodsData);
         }
     }
 }
