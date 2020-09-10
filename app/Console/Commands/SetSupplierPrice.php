@@ -55,9 +55,7 @@ class SetSupplierPrice extends Command
 
 
         foreach($months as $month) {
-            $data = Support::where('order_time','>',$month)
-                ->where('order_time','<',Carbon::parse($month)->addMonth()->firstOfMonth()->format('Y-m-d'))
-                ->select('sku',
+            $data = Support::select('sku',
                     DB::raw("sum(total_price) total_price"),
                     DB::raw("sum(total_cost) total_cost"),
                     DB::raw("sum(count) count")
@@ -67,12 +65,10 @@ class SetSupplierPrice extends Command
             foreach($data as $v) {
                 $item = [
                     'sku' => $v['sku'],
-                    'month' => Carbon::parse($month)->format('Y-m'),
                 ];
 
                 $price = [
                     'sku' => $v['sku'],
-                    'month' => Carbon::parse($month)->format('Y-m'),
                     'price' => round(($v['total_price'] + $v['total_cost'])/$v['count'],2)
                 ];
 

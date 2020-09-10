@@ -16,7 +16,6 @@ class CreateSupportPriceTendersTable extends Migration
         Schema::create('support_price_tenders', function (Blueprint $table) {
             $table->id();
             $table->string('sku',50)->default('')->index()->comment('sku');
-            $table->string('month',50)->default('')->comment('月份');
             $table->decimal('price',10,2)->default(0);
             $table->timestamps();
         });

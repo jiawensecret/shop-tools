@@ -48,9 +48,11 @@ class Kernel extends HttpKernel
 
         'test' => [
             \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             ReactMiddleware::class,
-            CrossResponseMiddle::class
+            CrossResponseMiddle::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
