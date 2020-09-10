@@ -41,39 +41,25 @@ class SetSupplierPrice extends Command
      */
     public function handle()
     {
-        if(is_null($this->option('month'))) {
-            $months = [
-                Carbon::now()->firstOfMonth()->subMonths(2)->format('Y-m-d'),
-                Carbon::now()->firstOfMonth()->subMonths(1)->format('Y-m-d'),
-                Carbon::now()->firstOfMonth()->format('Y-m-d'),
+        $data = Support::select('sku',
+            DB::raw("sum(total_price) total_price"),
+            DB::raw("sum(total_cost) total_cost"),
+            DB::raw("sum(count) count")
+        )->groupBy('sku')
+            ->get();
+
+        foreach ($data as $v) {
+            $item = [
+                'sku' => $v['sku'],
             ];
-        } else {
-            $months = [
-                Carbon::parse($this->option('month'))->firstOfMonth()->format('Y-m-d'),
+
+            $price = [
+                'sku' => $v['sku'],
+                'price' => round(($v['total_price'] + $v['total_cost']) / $v['count'], 2)
             ];
+
+            SupportPriceTender::updateOrCreate($item, $price);
         }
 
-
-        foreach($months as $month) {
-            $data = Support::select('sku',
-                    DB::raw("sum(total_price) total_price"),
-                    DB::raw("sum(total_cost) total_cost"),
-                    DB::raw("sum(count) count")
-                )->groupBy('sku')
-                ->get();
-
-            foreach($data as $v) {
-                $item = [
-                    'sku' => $v['sku'],
-                ];
-
-                $price = [
-                    'sku' => $v['sku'],
-                    'price' => round(($v['total_price'] + $v['total_cost'])/$v['count'],2)
-                ];
-
-                SupportPriceTender::updateOrCreate($item,$price);
-            }
-        }
     }
 }
