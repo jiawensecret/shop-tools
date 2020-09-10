@@ -89,9 +89,9 @@ class OrdersImport implements OnEachRow
                     'order_id' => $order->id,
                     'package_code' => $row[$this->map['包裹号']],
                     'transport_no' => $row[$this->map['运单号']],
-                    'sku' => $row[$this->map['SKU']],
                     'size' => $row[$this->map['产品规格']],
                     'pic' => $row[$this->map['图片网址']],
+                    'sku_deal' =>  $row[$this->map['商品SKU']]
                 ];
 
                 $goodsData = array_filter($goodsData);
@@ -100,9 +100,6 @@ class OrdersImport implements OnEachRow
                 $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
                     ->where('sku',$row[$this->map['SKU']])
                     ->first();
-                Log::info('goods',$orderGoods->toArray());
-                Log::info('sql'. OrderGoods::where('order_no',$row[$this->map['订单号']])
-                        ->where('sku',$row[$this->map['SKU']])->toSql());
 
                 if ($orderGoods) {
                     $orderGoods->update($goodsData);
