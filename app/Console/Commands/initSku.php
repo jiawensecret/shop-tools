@@ -41,6 +41,9 @@ class initSku extends Command
         OrderGoods::chunk(100, function ($goods) {
             foreach ($goods as $v) {
                 $sku = preg_replace("[`•~!@#$%^&*()+=|{}\':;\',\\[\\]\.<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。 ，、？]",'',$v->sku);
+                $sku = str_replace('(','',$sku);
+                $sku = str_replace(')','',$sku);
+                $sku = str_replace('/','',$sku);
                 $sku = str_replace('.','',$sku);
                 $sku = str_replace('•','',$sku);
                 $sku = str_replace(' ','',$sku);

@@ -178,10 +178,12 @@ class Shopify
             $sku = empty($item['sku']) ? '' : $item['sku'];
             $goodsData['sku'] = $sku;
 
-            $sku = preg_replace("[`•~!@#$%^&*()+=|{}\':;\',\\[\\]\.<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。 ，、？]",'',$sku);
             $sku = str_replace('.','',$sku);
             $sku = str_replace('•','',$sku);
             $sku = str_replace(' ','',$sku);
+            $sku = str_replace('(','',$sku);
+            $sku = str_replace(')','',$sku);
+            $sku = str_replace('/','',$sku);
             $goodsData['sku_deal'] = $sku;
 
             $order->goods()->updateOrCreate([
