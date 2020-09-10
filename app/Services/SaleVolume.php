@@ -59,9 +59,9 @@ class SaleVolume
 
     public function builtOrderLog()
     {
-        $orders = Order::where('pay_time','>',$this->startTime)
-            ->where('pay_time','<', $this->endTime)
-            ->where('is_volume',Order::NOT_VOLUME)
+        $orders = Order::where('pay_time', '>', $this->startTime)
+            ->where('pay_time', '<', $this->endTime)
+            ->where('is_volume', Order::NOT_VOLUME)
             ->get();
 
         foreach ($orders as $order) {
@@ -70,7 +70,7 @@ class SaleVolume
             if (!count($transport)) continue;
 
             $i = 0;
-            foreach ($transport as $value){
+            foreach ($transport as $value) {
                 if ($value->status != Transport::GOT) {
                     $i = 1;
                     break;
@@ -92,9 +92,9 @@ class SaleVolume
             $orderGoods = $order->goods;
             $cost = 0;
             foreach ($orderGoods as $item) {
-                $supportTender = SupportPriceTender::where('sku',$item['sku'])->first();
+                $supportTender = SupportPriceTender::where('sku', $item['sku'])->first();
                 if (!$supportTender) {
-                    $supportTender = SupportPriceTender::where('sku',$item['sku_deal'])->first();
+                    $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
                 }
 
                 $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
@@ -110,40 +110,78 @@ class SaleVolume
                 'refund' => $order->refund_price,
             ];
 
-            $volume->log()->updateOrCreate(['order_id' => $order->id,'shop_id' => $order->shop_id],$data);
+            $volume->log()->updateOrCreate(['order_id' => $order->id, 'shop_id' => $order->shop_id], $data);
 
             $order->is_volume = Order::VOLUMED;
             $order->save();
         }
     }
 
+    public function updateLogs()
+    {
+        SaleVolumeOrderLog::where('month',$this->month)->chunk(100, function ($logs) {
+            foreach ($logs as $log) {
+                $order = Order::find($log->order_id);
+
+                if ($order) {
+
+                    $transport = $order->transport;
+                    if (!count($transport)) continue;
+
+                    $orderGoods = $order->goods;
+                    $cost = 0;
+                    foreach ($orderGoods as $item) {
+                        $supportTender = SupportPriceTender::where('sku', $item['sku'])->first();
+                        if (!$supportTender) {
+                            $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
+                        }
+
+                        $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
+                        $cost += $item->count * $supplierPrice;
+                    }
+
+                    $data = [
+                        'order_price' => $order->order_price,
+                        'month' => $this->month,
+                        'cost_price' => $cost,
+                        'transport_price' => $transport->sum('transport_price'),
+                        'pay_charge' => $order->fee_amount,
+                        'refund' => $order->refund_price,
+                    ];
+
+                    $log->update($data);
+                }
+            }
+        });
+    }
+
     public function calculate($exchange)
     {
         //广告费用
-        $adPrice = AdPrice::where('month',$this->month)->get();
-        foreach ($adPrice as $price){
-            $count = SaleVolumeOrderLog::where('month',$this->month)
-                ->where('shop_id',$price->shop_id)
+        $adPrice = AdPrice::where('month', $this->month)->get();
+        foreach ($adPrice as $price) {
+            $count = SaleVolumeOrderLog::where('month', $this->month)
+                ->where('shop_id', $price->shop_id)
                 ->count();
             if (!$count) continue;
 
-            $perPrice = round($price->price / $count,2);
-            if ($price->type == 1) $perPrice = round($perPrice * $exchange,2);
+            $perPrice = round($price->price / $count, 2);
+            if ($price->type == 1) $perPrice = round($perPrice * $exchange, 2);
 
-            SaleVolumeOrderLog::where('month',$this->month)
-                ->where('shop_id',$price->shop_id)
-                ->update(['ad_price' =>$perPrice]);
+            SaleVolumeOrderLog::where('month', $this->month)
+                ->where('shop_id', $price->shop_id)
+                ->update(['ad_price' => $perPrice]);
         }
 
         //计算利润
-        $raw = '(order_price - pay_charge - refund) *' . $exchange .'-cost_price-transport_price-ad_price-shop_charge';
-        SaleVolumeOrderLog::where('month',$this->month)
+        $raw = '(order_price - pay_charge - refund) *' . $exchange . '-cost_price-transport_price-ad_price-shop_charge';
+        SaleVolumeOrderLog::where('month', $this->month)
             ->update(['profit' => DB::raw($raw)]);
     }
 
     public function totalReport($exchange)
     {
-        $volumes = SaleVolumeOrderLog::where('month',$this->month)
+        $volumes = SaleVolumeOrderLog::where('month', $this->month)
             ->select('sales_volume_id',
                 DB::raw("SUM(order_price-refund-pay_charge) as volume"),
                 DB::raw("SUM(cost_price+transport_price+ad_price+shop_charge) / {$exchange} as total_cost"),

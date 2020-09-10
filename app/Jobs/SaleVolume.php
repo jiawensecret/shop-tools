@@ -36,6 +36,7 @@ class SaleVolume implements ShouldQueue
         set_time_limit(0);
         try {
             $service =  new \App\Services\SaleVolume($this->saleVolumeJob->month);
+            $service->updateLogs();
             $service->builtOrderLog();
             $service->calculate($this->saleVolumeJob->exchange);
             $service->totalReport($this->saleVolumeJob->exchange);
