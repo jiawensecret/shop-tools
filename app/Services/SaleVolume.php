@@ -8,6 +8,7 @@ use App\Model\AdPrice;
 use App\Model\Order;
 use App\Model\SalesVolume;
 use App\Model\SaleVolumeOrderLog;
+use App\Model\SupportPriceTender;
 use App\Model\Transport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -91,7 +92,9 @@ class SaleVolume
             $orderGoods = $order->goods;
             $cost = 0;
             foreach ($orderGoods as $item) {
-                $cost += $item->count * $item->supplier_price;
+                $supportTender = SupportPriceTender::where('month',$this->month)->where('sku',$item['sku'])->first();
+                $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
+                $cost += $item->count * $supplierPrice;
             }
 
             $data = [

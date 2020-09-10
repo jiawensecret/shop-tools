@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\GetOrdersFromShopify;
+use App\Console\Commands\SetSupplierPrice;
 use App\Console\Commands\ShopifyPayment;
 use App\Console\Commands\ShopifyShipping;
 use Illuminate\Console\Scheduling\Schedule;
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         GetOrdersFromShopify::class,
         ShopifyPayment::class,
-        ShopifyShipping::class
+        ShopifyShipping::class,
+        SetSupplierPrice::class,
     ];
 
     /**
@@ -36,6 +38,7 @@ class Kernel extends ConsoleKernel
             $schedule->command("shopify:payment --pid={$i}")->dailyAt('5:00');
         }
 
+        $schedule->command("setSupplierPrice")->hourly();
     }
 
     /**

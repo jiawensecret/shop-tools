@@ -27,7 +27,9 @@ class AdminController extends Controller
 
     public function getAdminInfo(){
         $admin = Auth::user();
-
+        if (empty($admin)) {
+            return response([],401);
+        }
         $data  = ['username' => $admin->username,
             'name' => $admin->name,
             'avatar' => $admin->avatar,
