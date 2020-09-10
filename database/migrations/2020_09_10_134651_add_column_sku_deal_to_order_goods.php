@@ -26,7 +26,7 @@ class AddColumnSkuDealToOrderGoods extends Migration
     public function down()
     {
         Schema::table('order_goods', function (Blueprint $table) {
-            $table->dropColumn('order_goods');
+            $table->dropColumn('sku_deal');
         });
     }
 }
