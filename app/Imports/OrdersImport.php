@@ -9,6 +9,8 @@ use App\Model\Shop;
 use App\Model\WarningOrderGoods;
 use App\TestExcel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 
@@ -98,6 +100,9 @@ class OrdersImport implements OnEachRow
                 $orderGoods = OrderGoods::where('order_no',$row[$this->map['订单号']])
                     ->where('sku',$row[$this->map['SKU']])
                     ->first();
+                Log::info('goods',$orderGoods->toArray());
+                Log::info('sql'. OrderGoods::where('order_no',$row[$this->map['订单号']])
+                        ->where('sku',$row[$this->map['SKU']])->toSql());
 
                 if ($orderGoods) {
                     $orderGoods->update($goodsData);
