@@ -45,7 +45,7 @@ class GetOrdersFromShopify extends Command
         $shops = Shop::all();
         foreach ($shops as $shop) {
             if (empty($shop->client_password) || empty($shop->dxm_id)) continue;
-            if (is_null($this->option('pid')) || ($shop->id % 10 != $this->option('pid'))) continue;
+            if (!is_null($this->option('pid')) && ($shop->id % 10 != $this->option('pid'))) continue;
             try {
                 $model = new Shopify($shop);
 

@@ -44,7 +44,6 @@ class ShopifyShipping extends Command
         $shops = Shop::all();
         foreach ($shops as $shop) {
             if (empty($shop->client_password) || empty($shop->dxm_id)) continue;
-            if (is_null($this->option('pid')) || ($shop->id % 10 != $this->option('pid'))) continue;
 
             $model = new Shopify($shop);
             Order::where('shop_id', $shop->id)
@@ -52,6 +51,7 @@ class ShopifyShipping extends Command
                 ->where('shopify_order_id','<>','')
                 ->chunk(100, function ($orders) use ($model) {
                     foreach ($orders as $order) {
+                        if (!is_null($this->option('pid')) && ($order->id % 10 != $this->option('pid'))) continue;
                         try{
                             $data = $model->getShippingByOrder($order->shopify_order_id);
                             $model->dealShipping($order,$data);
