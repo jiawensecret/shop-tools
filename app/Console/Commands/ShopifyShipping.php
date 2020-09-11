@@ -51,7 +51,7 @@ class ShopifyShipping extends Command
                 ->where('shopify_order_id','<>','')
                 ->chunk(100, function ($orders) use ($model) {
                     foreach ($orders as $order) {
-                        if (!is_null($this->option('pid')) && ($order->id % 10 != $this->option('pid'))) continue;
+                        if (!is_null($this->option('pid')) && (($order->id % 9 + 1) != $this->option('pid'))) continue;
                         try{
                             $data = $model->getShippingByOrder($order->shopify_order_id);
                             $model->dealShipping($order,$data);
