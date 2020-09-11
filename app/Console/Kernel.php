@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('shopify:orders')->twiceDaily(1,13);
         for ($i = 0; $i < 10; $i++) {
             $schedule->command("shopify:orders --pid={$i}")->everySixHours();
-            $schedule->command("shopify:shipping --pid={$i}")->dailyAt('9:00');
+           // $schedule->command("shopify:shipping --pid={$i}")->dailyAt('9:00');
             $schedule->command("shopify:payment --pid={$i}")->dailyAt('5:00');
         }
 
