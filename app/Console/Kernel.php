@@ -46,15 +46,15 @@ class Kernel extends ConsoleKernel
         $schedule->command("shopify:orders --pid=9")->everySixHours();
 
 
-        $schedule->command("shopify:shipping --pid=1")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=2")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=3")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=4")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=5")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=6")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=7")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=8")->dailyAt('2:20');
-        $schedule->command("shopify:shipping --pid=9")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=1")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=2")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=3")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=4")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=5")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=6")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=7")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=8")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=9")->dailyAt('14:30');
 
         $schedule->command("shopify:payment --pid=1")->dailyAt('5:00');
         $schedule->command("shopify:payment --pid=2")->dailyAt('5:00');
