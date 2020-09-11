@@ -35,36 +35,36 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('shopify:orders')->twiceDaily(1,13);
 
-        $schedule->command("shopify:orders --pid=1")->everySixHours();
-        $schedule->command("shopify:orders --pid=2")->everySixHours();
-        $schedule->command("shopify:orders --pid=3")->everySixHours();
-        $schedule->command("shopify:orders --pid=4")->everySixHours();
-        $schedule->command("shopify:orders --pid=5")->everySixHours();
-        $schedule->command("shopify:orders --pid=6")->everySixHours();
-        $schedule->command("shopify:orders --pid=7")->everySixHours();
-        $schedule->command("shopify:orders --pid=8")->everySixHours();
-        $schedule->command("shopify:orders --pid=9")->everySixHours();
+        $schedule->command("shopify:orders --pid=1")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=2")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=3")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=4")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=5")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=6")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=7")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=8")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=9")->withoutOverlapping()->everySixHours();
 
 
-        $schedule->command("shopify:shipping --pid=1")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=2")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=3")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=4")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=5")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=6")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=7")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=8")->dailyAt('14:30');
-        $schedule->command("shopify:shipping --pid=9")->dailyAt('14:30');
+        $schedule->command("shopify:shipping --pid=1")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=2")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=3")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=4")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=5")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=6")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=7")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=8")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=9")->withoutOverlapping()->dailyAt('14:45');
 
-        $schedule->command("shopify:payment --pid=1")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=2")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=3")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=4")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=5")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=6")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=7")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=8")->dailyAt('5:00');
-        $schedule->command("shopify:payment --pid=9")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=1")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=2")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=3")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=4")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=5")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=6")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=7")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=8")->withoutOverlapping()->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=9")->withoutOverlapping()->dailyAt('5:00');
 
 
         $schedule->command("setSupplierPrice")->hourly();
