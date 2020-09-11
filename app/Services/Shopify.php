@@ -189,7 +189,7 @@ class Shopify
             $order->goods()->updateOrCreate([
                 'order_id' => $order->id,
                 'order_no' => $orderData['order_no'],
-                'sku' => $sku
+                'sku' => $goodsData['sku']
             ],$goodsData);
         }
     }
