@@ -47,14 +47,14 @@ class Kernel extends ConsoleKernel
 
 
         $schedule->command("shopify:shipping --pid=1")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=2")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=3")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=4")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=5")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=6")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=7")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=8")->withoutOverlapping()->dailyAt('14:45');
-        $schedule->command("shopify:shipping --pid=9")->withoutOverlapping()->dailyAt('14:45');
+        $schedule->command("shopify:shipping --pid=2")->withoutOverlapping()->dailyAt('14:55');
+        $schedule->command("shopify:shipping --pid=3")->withoutOverlapping()->dailyAt('15:15');
+        $schedule->command("shopify:shipping --pid=4")->withoutOverlapping()->dailyAt('15:30');
+        $schedule->command("shopify:shipping --pid=5")->withoutOverlapping()->dailyAt('15:45');
+        $schedule->command("shopify:shipping --pid=6")->withoutOverlapping()->dailyAt('15:00');
+        $schedule->command("shopify:shipping --pid=7")->withoutOverlapping()->dailyAt('16:45');
+        $schedule->command("shopify:shipping --pid=8")->withoutOverlapping()->dailyAt('16:00');
+        $schedule->command("shopify:shipping --pid=9")->withoutOverlapping()->dailyAt('16:15');
 
         $schedule->command("shopify:payment --pid=1")->withoutOverlapping()->dailyAt('5:00');
         $schedule->command("shopify:payment --pid=2")->withoutOverlapping()->dailyAt('5:00');
