@@ -46,20 +46,23 @@ class ShopifyPayment extends Command
             if (empty($shop->client_password) || empty($shop->dxm_id)) continue;
 
             $model = new Shopify($shop);
-            Order::where('shop_id', $shop->id)
+            $query = Order::where('shop_id', $shop->id)
                 ->where('is_transactions', 0)
-                ->where('shopify_order_id','<>','')
-                ->chunk(100, function ($orders) use ($model) {
-                    foreach ($orders as $order) {
-                        if (!is_null($this->option('pid')) || (($order->id % 9 + 1) != $this->option('pid'))) continue;
-                        try{
-                            $data = $model->getPaymentByOrder($order->shopify_order_id);
-                            $model->dealPayment($order,$data);
-                        }catch (\Exception $exception) {
-                            Log::error($exception->getMessage());
-                        }
+                ->where('shopify_order_id', '<>', '');
+            if (!is_null($this->option('pid'))) {
+                $query->where('pid',$this->option('pid'));
+            }
+
+            $query->chunk(100, function ($orders) use ($model) {
+                foreach ($orders as $order) {
+                    try {
+                        $data = $model->getPaymentByOrder($order->shopify_order_id);
+                        $model->dealPayment($order, $data);
+                    } catch (\Exception $exception) {
+                        Log::error($exception->getMessage());
                     }
-                });
+                }
+            });
         }
     }
 }

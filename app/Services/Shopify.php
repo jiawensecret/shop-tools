@@ -156,6 +156,7 @@ class Shopify
         if ($order) {
             $order->update($orderData);
         } else {
+            $orderData['pid'] = rand(1,9);
             $order = Order::create($orderData);
         }
 
