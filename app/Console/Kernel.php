@@ -34,11 +34,38 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //$schedule->command('shopify:orders')->twiceDaily(1,13);
-        for ($i = 1; $i < 10; $i++) {
-            $schedule->command("shopify:orders --pid={$i}")->everySixHours();
-            $schedule->command("shopify:shipping --pid={$i}")->dailyAt('2:20');
-            $schedule->command("shopify:payment --pid={$i}")->dailyAt('5:00');
-        }
+
+        $schedule->command("shopify:orders --pid=1")->everySixHours();
+        $schedule->command("shopify:orders --pid=2")->everySixHours();
+        $schedule->command("shopify:orders --pid=3")->everySixHours();
+        $schedule->command("shopify:orders --pid=4")->everySixHours();
+        $schedule->command("shopify:orders --pid=5")->everySixHours();
+        $schedule->command("shopify:orders --pid=6")->everySixHours();
+        $schedule->command("shopify:orders --pid=7")->everySixHours();
+        $schedule->command("shopify:orders --pid=8")->everySixHours();
+        $schedule->command("shopify:orders --pid=9")->everySixHours();
+
+
+        $schedule->command("shopify:shipping --pid=1")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=2")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=3")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=4")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=5")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=6")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=7")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=8")->dailyAt('2:20');
+        $schedule->command("shopify:shipping --pid=9")->dailyAt('2:20');
+
+        $schedule->command("shopify:payment --pid=1")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=2")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=3")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=4")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=5")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=6")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=7")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=8")->dailyAt('5:00');
+        $schedule->command("shopify:payment --pid=9")->dailyAt('5:00');
+
 
         $schedule->command("setSupplierPrice")->hourly();
     }
