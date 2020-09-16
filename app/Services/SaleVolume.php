@@ -183,9 +183,17 @@ class SaleVolume
     {
         $volumes = SaleVolumeOrderLog::where('month', $this->month)
             ->select('sales_volume_id',
-                DB::raw("SUM(order_price-refund-pay_charge) as volume"),
+                DB::raw("SUM(order_price-pay_charge) as volume"),
                 DB::raw("SUM(cost_price+transport_price+ad_price+shop_charge) / {$exchange} as total_cost"),
-                DB::raw("SUM(profit) / {$exchange} as total_profit"))
+                DB::raw("SUM(profit) / {$exchange} as total_profit"),
+                DB::raw("SUM(order_price) as order_price"),
+                DB::raw("SUM(refund) as refund"),
+                DB::raw("SUM(pay_charge) as pay_charge"),
+                DB::raw("SUM(cost_price) / {$exchange} as cost_price"),
+                DB::raw("SUM(transport_price) / {$exchange} as transport_price"),
+                DB::raw("SUM(ad_price) / {$exchange} as ad_price"),
+                DB::raw("SUM(shop_charge) / {$exchange} as shop_charge")
+            )
             ->groupBy('sales_volume_id')
             ->get();
 
@@ -195,6 +203,13 @@ class SaleVolume
             $report->total_cost = $volume->total_cost;
             $report->profit = $volume->total_profit;
             $report->exchange = $exchange;
+            $report->order_price = $volume->order_price;
+            $report->refund = $volume->refund;
+            $report->pay_charge = $volume->pay_charge;
+            $report->cost_price = $volume->cost_price;
+            $report->transport_price = $volume->transport_price;
+            $report->ad_price = $volume->ad_price;
+            $report->shop_charge = $volume->shop_charge;
 
             $report->save();
         }

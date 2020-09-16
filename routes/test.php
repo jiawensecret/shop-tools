@@ -34,6 +34,8 @@ Route::group(['middleware' => ['test']],function (){
 
     Route::get('/month-list','CommonController@monthList');
 
+    Route::get('/sale-volume-order/{id}','SaleVolumeOrderController@index');
+
     Route::post('/login/account','AdminController@login');
     Route::get('/currentUser','AdminController@getAdminInfo');
 
