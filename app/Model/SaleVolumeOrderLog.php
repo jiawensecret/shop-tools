@@ -60,7 +60,7 @@ class SaleVolumeOrderLog extends Model
 
     public function getVolumeAttribute($value)
     {
-        return $this->order_price - $this->pay_charge;
+        return round($this->order_price - $this->pay_charge,2);
     }
 
 }
