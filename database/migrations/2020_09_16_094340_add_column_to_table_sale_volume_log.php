@@ -31,7 +31,7 @@ class AddColumnToTableSaleVolumeLog extends Migration
      */
     public function down()
     {
-        Schema::table('sales_volume_log', function (Blueprint $table) {
+        Schema::table('sales_volumes', function (Blueprint $table) {
             $table->dropColumn('order_price');
             $table->dropColumn('cost_price');
             $table->dropColumn('ad_price');
