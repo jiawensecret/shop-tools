@@ -136,7 +136,9 @@ class SaleVolume
                             $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
                         }
 
-                        $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
+                        $aPrice = $supportTender['price'] ?? 0;
+
+                        $supplierPrice = $item->supplier_price ?: $aPrice;
                         $cost += $item->count * $supplierPrice;
                     }
 
