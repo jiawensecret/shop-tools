@@ -33,17 +33,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('shopify:orders')->twiceDaily(1,13);
+        $schedule->command('shopify:orders')->everySixHours();
 
-        $schedule->command("shopify:orders --pid=1")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=2")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=3")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=4")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=5")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=6")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=7")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=8")->withoutOverlapping()->everySixHours();
-        $schedule->command("shopify:orders --pid=9")->withoutOverlapping()->everySixHours();
+        $schedule->command("shopify:orders --pid=1")->withoutOverlapping()->dailyAt('14：00');
+        $schedule->command("shopify:orders --pid=2")->withoutOverlapping()->dailyAt('14：02');
+        $schedule->command("shopify:orders --pid=3")->withoutOverlapping()->dailyAt('14：04');
+        $schedule->command("shopify:orders --pid=4")->withoutOverlapping()->dailyAt('14：06');
+        $schedule->command("shopify:orders --pid=5")->withoutOverlapping()->dailyAt('14：08');
+        $schedule->command("shopify:orders --pid=6")->withoutOverlapping()->dailyAt('14：10');
+        $schedule->command("shopify:orders --pid=7")->withoutOverlapping()->dailyAt('14：12');
+        $schedule->command("shopify:orders --pid=8")->withoutOverlapping()->dailyAt('14：14');
+        $schedule->command("shopify:orders --pid=9")->withoutOverlapping()->dailyAt('14：16');
 
 
         $schedule->command("shopify:shipping --pid=1")->withoutOverlapping()->dailyAt('14:45');
