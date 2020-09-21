@@ -48,8 +48,11 @@ class Shopify
         $this->setHeader();
 
         Log::info('【orders】 url:'.$url);
+        Log::info('【header】',$this->header);
 
         $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
+
+        Log::info('【body】'.$res->body);
 
         preg_match("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
