@@ -51,8 +51,7 @@ class Shopify
         Log::info('【header】',$this->header);
 
         $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
-
-        Log::info('【body】'.$res->body);
+        
 
         preg_match("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
