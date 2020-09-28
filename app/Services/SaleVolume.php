@@ -93,9 +93,9 @@ class SaleVolume
             $cost = 0;
             foreach ($orderGoods as $item) {
                 $supportTender = SupportPriceTender::where('sku', $item['sku'])->first();
-                if (!$supportTender) {
-                    $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
-                }
+//                if (!$supportTender) {
+//                    $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
+//                }
 
                 $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
                 $cost += $item->count * $supplierPrice;
