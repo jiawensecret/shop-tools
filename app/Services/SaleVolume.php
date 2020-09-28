@@ -142,7 +142,8 @@ class SaleVolume
 //                        $supplierPrice = $item->supplier_price ?: $aPrice;
 
                         $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
-                        $cost += $item->count * $supplierPrice;
+
+                        $cost = $cost + $item['count'] * $supplierPrice;
                     }
 
                     $data = [
