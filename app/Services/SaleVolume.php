@@ -133,9 +133,9 @@ class SaleVolume
                     $cost = 0;
                     foreach ($orderGoods as $item) {
                         $supportTender = SupportPriceTender::where('sku', $item['sku'])->first();
-                        if (!$supportTender) {
-                            $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
-                        }
+//                        if (!$supportTender) {
+//                            $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
+//                        }
 
 //                        $aPrice = $supportTender['price'] ?? 0;
 //
@@ -155,6 +155,8 @@ class SaleVolume
                         'refund' => $order->refund_price,
                         'shop_charge' => round($order->order_price * $log->shop->charge_percent,2)
                     ];
+
+                    unset($cost);
 
                     $log->update($data);
                 }
