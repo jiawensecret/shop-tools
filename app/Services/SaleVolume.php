@@ -12,6 +12,7 @@ use App\Model\SupportPriceTender;
 use App\Model\Transport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SaleVolume
 {
@@ -141,6 +142,7 @@ class SaleVolume
 //                        $aPrice = $supportTender['price'] ?? 0;
 //
 //                        $supplierPrice = $item->supplier_price ?: $aPrice;
+                        Log::info('tender:'.$item->supplier_price.'|||',$supportTender->toArray());
 
                         $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
 
