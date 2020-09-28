@@ -69,14 +69,14 @@ class SaleVolume
             $transport = $order->transport;
             if (!count($transport)) continue;
 
-            $i = 0;
-            foreach ($transport as $value) {
-                if ($value->status != Transport::GOT) {
-                    $i = 1;
-                    break;
-                }
-            }
-            if ($i == 1) continue;
+//            $i = 0;
+//            foreach ($transport as $value) {
+//                if ($value->status != Transport::GOT) {
+//                    $i = 1;
+//                    break;
+//                }
+//            }
+//            if ($i == 1) continue;
 
             if (!isset($this->shopToPerson[$order->shop_id])) {
                 if (!$this->setAttr($order)) continue;
@@ -108,6 +108,7 @@ class SaleVolume
                 'transport_price' => $transport->sum('transport_price'),
                 'pay_charge' => $order->fee_amount,
                 'refund' => $order->refund_price,
+                'order_create_time' => $order->order_time
             ];
 
             $volume->log()->updateOrCreate(['order_id' => $order->id, 'shop_id' => $order->shop_id], $data);
@@ -151,6 +152,7 @@ class SaleVolume
                         'transport_price' => $transport->sum('transport_price'),
                         'pay_charge' => $order->fee_amount,
                         'refund' => $order->refund_price,
+                        'shop_charge' => round($order->order_price * $log->shop->charge_percent,2)
                     ];
 
                     $log->update($data);
@@ -178,7 +180,7 @@ class SaleVolume
         }
 
         //计算利润
-        $raw = '(order_price - pay_charge - refund) *' . $exchange . '-cost_price-transport_price-ad_price-shop_charge';
+        $raw = '(order_price - pay_charge - refund - shop_charge) *' . $exchange . '-cost_price-transport_price-ad_price-shop_charge';
         SaleVolumeOrderLog::where('month', $this->month)
             ->update(['profit' => DB::raw($raw)]);
     }

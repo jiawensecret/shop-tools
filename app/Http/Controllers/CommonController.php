@@ -8,6 +8,7 @@ use App\Http\Resources\VolumeJobCollection;
 use App\Jobs\ReadExcel;
 use App\Model\ReadExcelJob;
 use App\Model\SaleVolumeJob;
+use App\Model\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,6 +72,15 @@ class CommonController extends Controller
         for ($i = 0; $i < 12; $i++) {
             $res[] = Carbon::now()->firstOfMonth()->subMonths($i)->format('Y-m');
         }
+
+        return new CommonColletction($res);
+    }
+
+    public function shopList()
+    {
+        $shops = Shop::all()->toArray();
+
+        $res = array_column($shops,'name','id');
 
         return new CommonColletction($res);
     }

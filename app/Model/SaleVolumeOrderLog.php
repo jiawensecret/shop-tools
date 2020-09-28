@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Model;
-
 use Illuminate\Database\Eloquent\Model;
 
 class SaleVolumeOrderLog extends Model
@@ -21,6 +20,11 @@ class SaleVolumeOrderLog extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 
     public function getOrderNoAttribute($value)

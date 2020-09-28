@@ -33,6 +33,7 @@ Route::group(['middleware' => ['test']],function (){
     Route::get('/show-calculate-job','CommonController@showCalculateJob');
 
     Route::get('/month-list','CommonController@monthList');
+    Route::get('/shop-list','CommonController@shopList');
 
     Route::get('/sale-volume-order/{id}','SaleVolumeOrderController@index');
 
