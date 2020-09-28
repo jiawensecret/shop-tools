@@ -142,12 +142,13 @@ class SaleVolume
 //                        $aPrice = $supportTender['price'] ?? 0;
 //
 //                        $supplierPrice = $item->supplier_price ?: $aPrice;
-                        Log::info('tender:'.$item->supplier_price.'|||',$supportTender->toArray());
 
                         $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
 
                         $cost = $cost + $item['count'] * $supplierPrice;
                         unset($supportTender);
+
+                        Log::info('tender:'.$item->supplier_price.'|||'.$supplierPrice.'|||'.$item['count']);
                     }
 
                     $data = [
