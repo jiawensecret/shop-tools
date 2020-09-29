@@ -97,11 +97,11 @@ class SaleVolume
 //                if (!$supportTender) {
 //                    $supportTender = SupportPriceTender::where('sku', $item['sku_deal'])->first();
 //                }
-                $aPrice = $supportTender['price'] ?? 0;
+//                $aPrice = $supportTender['price'] ?? 0;
+//
+//                $supplierPrice = $item->supplier_price ?: $aPrice;
 
-                $supplierPrice = $item->supplier_price ?: $aPrice;
-
-               //$supplierPrice = $supportTender['price'] ?? $item->supplier_price;
+                $supplierPrice = $supportTender['price'] ?? $item->supplier_price;
                 $cost += $item->count * $supplierPrice;
                 unset($supportTender);
             }
