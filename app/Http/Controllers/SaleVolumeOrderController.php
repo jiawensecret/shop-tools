@@ -23,8 +23,14 @@ class SaleVolumeOrderController extends Controller
 
         $query->where('sales_volume_id',$id);
 
-        if ($shop_id = $request->get('shop_id','')) {
-            $query->where('shop_id',$shop_id);
+//        if ($shop_id = $request->get('shop_id','')) {
+//            $query->where('shop_id',$shop_id);
+//        }
+
+        if ($shop_name = $request->get('shop_name','')) {
+            $query->whereHas('shop',function ($q) use ($shop_name){
+                $q->where('name','like',$shop_name.'%');
+            });
         }
 
         if ($order_no = $request->get('order_no','')) {
