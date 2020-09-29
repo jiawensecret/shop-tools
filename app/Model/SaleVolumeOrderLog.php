@@ -9,7 +9,7 @@ class SaleVolumeOrderLog extends Model
     protected $guarded = ['id'];
 
     protected $appends = ['order_no', 'exchange', 'cost_price_show','profit_show',
-        'transport_price_show', 'ad_price_show', 'shop_charge_show','volume'
+        'transport_price_show', 'ad_price_show', 'shop_charge_show','volume','shop_name'
     ];
 
     public function report()
@@ -65,6 +65,11 @@ class SaleVolumeOrderLog extends Model
     public function getVolumeAttribute($value)
     {
         return round($this->order_price - $this->pay_charge,2);
+    }
+
+    public function getShopNameAttribute($value)
+    {
+        return $this->order->shop_name;
     }
 
 }
