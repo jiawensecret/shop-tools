@@ -69,7 +69,7 @@ class SaleVolumeOrderLog extends Model
 
     public function getShopNameAttribute($value)
     {
-        return $this->order->shop_name;
+        return $this->shop->shop_name;
     }
 
 }
