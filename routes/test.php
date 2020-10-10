@@ -22,6 +22,7 @@ Route::group(['middleware' => ['test']],function (){
         'shops' => 'ShopController',
         'accounts' => 'AccountController',
         'ad-prices' => 'AdPriceController',
+        'shop-prices' => 'ShopPriceController',
         'sale-volumes'=>'SaleVolumeController'
     ]);
 
