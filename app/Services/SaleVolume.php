@@ -8,6 +8,7 @@ use App\Model\AdPrice;
 use App\Model\Order;
 use App\Model\SalesVolume;
 use App\Model\SaleVolumeOrderLog;
+use App\Model\ShopPrice;
 use App\Model\SupportPriceTender;
 use App\Model\Transport;
 use Carbon\Carbon;
@@ -190,8 +191,23 @@ class SaleVolume
                 ->update(['ad_price' => $perPrice]);
         }
 
+        //店铺手续费
+        $shopPrice = ShopPrice::where('month', $this->month)->get();
+        foreach ($shopPrice as $price) {
+            $count = SaleVolumeOrderLog::where('month', $this->month)
+                ->where('shop_id', $price->shop_id)
+                ->count();
+            if (!$count) continue;
+
+            $perPrice = round($price->price / $count, 2);
+
+            SaleVolumeOrderLog::where('month', $this->month)
+                ->where('shop_id', $price->shop_id)
+                ->update(['shop_charge' => $perPrice]);
+        }
+
         //计算利润
-        $raw = '(order_price - pay_charge - refund - shop_charge) *' . $exchange . '-cost_price-transport_price-ad_price-shop_charge';
+        $raw = '(order_price - pay_charge - refund - shop_charge) *' . $exchange . '-cost_price-transport_price-ad_price';
         SaleVolumeOrderLog::where('month', $this->month)
             ->update(['profit' => DB::raw($raw)]);
     }
