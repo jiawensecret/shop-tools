@@ -225,7 +225,7 @@ class SaleVolume
                 DB::raw("SUM(cost_price) / {$exchange} as cost_price"),
                 DB::raw("SUM(transport_price) / {$exchange} as transport_price"),
                 DB::raw("SUM(ad_price) / {$exchange} as ad_price"),
-                DB::raw("SUM(shop_charge) / {$exchange} as shop_charge")
+                DB::raw("SUM(shop_charge) as shop_charge")
             )
             ->groupBy('sales_volume_id')
             ->get();
