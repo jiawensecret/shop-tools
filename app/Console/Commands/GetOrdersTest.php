@@ -16,7 +16,7 @@ class GetOrdersTest extends Command
      *
      * @var string
      */
-    protected $signature = 'test:orders {--shop} {--start_time} {--end_time}';
+    protected $signature = 'test:orders {--shop=} {--start_time=} {--end_time=}';
 
     /**
      * The console command description.
