@@ -23,8 +23,8 @@ class TestController extends Controller
 {
     public function index(){
         $shop_id = 4;
-        $start_time = '2020-07-01';
-        $end_time = '2020-08-01';
+        $start_time = '2020-08-01';
+        $end_time = '2020-09-01';
 
         $shop = Shop::find($shop_id);
 
@@ -36,7 +36,6 @@ class TestController extends Controller
             $count = 0;
             foreach($data as $item){
                 $time = Carbon::parse($item['created_at'])->toDateTimeString();
-                dump($item);
                 if($time >= $start_time && $time <= $end_time) {
                     ++$count;
                     echo $item['order_number'];
@@ -54,7 +53,6 @@ class TestController extends Controller
 
                 foreach($data as $item){
                     $time = Carbon::parse($item['created_at'])->toDateTimeString();
-                    dump($item);
                     if($time >= $start_time && $time <= $end_time) {
                         ++$count;
                         echo $item['order_number'];
