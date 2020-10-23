@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\GetOrdersFromShopify;
 use App\Console\Commands\GetOrdersTest;
+use App\Console\Commands\GetOrdersWithTime;
 use App\Console\Commands\initSku;
 use App\Console\Commands\SetSupplierPrice;
 use App\Console\Commands\ShopifyPayment;
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         ShopifyShipping::class,
         SetSupplierPrice::class,
         initSku::class,
-        GetOrdersTest::class
+        GetOrdersTest::class,
+        GetOrdersWithTime::class,
     ];
 
     /**
