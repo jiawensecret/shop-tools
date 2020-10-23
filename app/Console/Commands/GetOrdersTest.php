@@ -46,7 +46,7 @@ class GetOrdersTest extends Command
         $start_time = $this->option('start_time');
         $end_time = $this->option('end_time');
 
-        $shop = Shop::first($shop_id);
+        $shop = Shop::find($shop_id);
 
         try {
             $model = new Shopify($shop);
