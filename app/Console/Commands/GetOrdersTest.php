@@ -58,7 +58,7 @@ class GetOrdersTest extends Command
                 $time = Carbon::parse($data['created_at'])->toDateTimeString();
                 if($time >= $start_time && $time <= $end_time) {
                     ++$count;
-                    echo $item['order_number'];
+                    dump($item['order_number']);
                 }
 
             }
@@ -75,12 +75,13 @@ class GetOrdersTest extends Command
                     $time = Carbon::parse($data['created_at'])->toDateTimeString();
                     if($time >= $start_time && $time <= $end_time) {
                         ++$count;
-                        echo $item['order_number'];
+                        dump($item['order_number']);
                     }
                 }
             }
-            echo $count;
+            dump($count);
         } catch (\Exception $exception) {
+            dump('error');
             Log::error($exception->getMessage());
         }
 

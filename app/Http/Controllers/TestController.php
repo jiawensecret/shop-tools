@@ -10,9 +10,11 @@ use App\Model\SaleVolumeOrderLog;
 use App\Model\Shop;
 use App\Services\SaleVolume;
 use App\Services\Shopify;
+use App\SystemShopifyLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,26 +22,48 @@ use Maatwebsite\Excel\Facades\Excel;
 class TestController extends Controller
 {
     public function index(){
-        $shop = Shop::find(2);
-       // try {
+        $shop_id = 4;
+        $start_time = '2020-07-01';
+        $end_time = '2020-08-01';
+
+        $shop = Shop::find($shop_id);
+
+        try {
             $model = new Shopify($shop);
 
-            $order = Order::find(1100);
+            [$data,$url] = $model->getOrders(Carbon::now()->subMonths(3)->toDateTimeString());
 
-            $data = $model->getShippingByOrder('2159708569734');
-            $model->dealShipping($order,$data);
-            dd($data);
-//        } catch (\Exception $exception) {
-//            echo 111;
-//        }
+            $count = 0;
+            foreach($data as $item){
+                $time = Carbon::parse($data['created_at'])->toDateTimeString();
+                if($time >= $start_time && $time <= $end_time) {
+                    ++$count;
+                    echo $item['order_number'];
+                }
 
+            }
+            while($url) {
+                $shopifyLog = SystemShopifyLog::create([
+                    'url' => $url,
+                    'command' => $this->signature,
+                    'shop_id' => $shop->id,
+                    'pid' => intval($this->option('pid')) ?: 0
+                ]);
+                [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
 
-
-
-//        ini_set('memory_limit', '512M');
-//        set_time_limit(0);
-//        Excel::import(new OrdersImport, storage_path('app/订单列表1-3.xlsx'));
-//        echo 111;exit;
+                foreach($data as $item){
+                    $time = Carbon::parse($data['created_at'])->toDateTimeString();
+                    if($time >= $start_time && $time <= $end_time) {
+                        ++$count;
+                        echo $item['order_number'];
+                    }
+                }
+            }
+            echo $count;
+        } catch (\Exception $exception) {
+            echo 'error';
+            Log::error($exception->getMessage());
+        }
     }
 
     public function transport()
