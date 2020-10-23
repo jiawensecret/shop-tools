@@ -45,9 +45,9 @@ class TestController extends Controller
             while($url) {
                 $shopifyLog = SystemShopifyLog::create([
                     'url' => $url,
-                    'command' => $this->signature,
+                    'command' => '',
                     'shop_id' => $shop->id,
-                    'pid' => intval($this->option('pid')) ?: 0
+                    'pid' => 0
                 ]);
                 [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
 
