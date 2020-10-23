@@ -55,7 +55,7 @@ class GetOrdersTest extends Command
 
             $count = 0;
             foreach($data as $item){
-                $time = Carbon::parse($data['created_at'])->toDateTimeString();
+                $time = Carbon::parse($item['created_at'])->toDateTimeString();
                 if($time >= $start_time && $time <= $end_time) {
                     ++$count;
                     dump($item['order_number']);
@@ -72,7 +72,7 @@ class GetOrdersTest extends Command
                 [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
 
                 foreach($data as $item){
-                    $time = Carbon::parse($data['created_at'])->toDateTimeString();
+                    $time = Carbon::parse($item['created_at'])->toDateTimeString();
                     if($time >= $start_time && $time <= $end_time) {
                         ++$count;
                         dump($item['order_number']);
