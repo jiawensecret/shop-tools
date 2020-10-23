@@ -51,7 +51,7 @@ class Shopify
         Log::info('【header】',$this->header);
 
         $res = \Requests::get($url, $this->header, ['timeout' => 65, 'connect_timeout' => 10]);
-        
+
 
         preg_match("/(?<=\<)[^>]+/", $res->headers['link'], $match);
 
@@ -139,14 +139,14 @@ class Shopify
             'custom_transport_name' => $data['customer']['email'] ?: '',
             'transport_name' => $data['customer']['email'] ?: '',
 
-            'consignee' => $data['shipping_address']['name'],
-            'consignee_address' => $data['shipping_address']['address1'],
-            'consignee_city' => $data['shipping_address']['city'],
-            'consignee_province' => $data['shipping_address']['province'],
-            'consignee_code' => $data['shipping_address']['zip'],
-            'consignee_country' => $data['shipping_address']['country'] ?: '',
-            'consignee_country_code' => $data['shipping_address']['country_code'] ?: '',
-            'consignee_phone' => $data['shipping_address']['phone'] ?: '',
+            'consignee' => $data['shipping_address']['name'] ?? '',
+            'consignee_address' => $data['shipping_address']['address1'] ?? '',
+            'consignee_city' => $data['shipping_address']['city'] ?? '',
+            'consignee_province' => $data['shipping_address']['province'] ?? '',
+            'consignee_code' => $data['shipping_address']['zip'] ?? '',
+            'consignee_country' => $data['shipping_address']['country'] ?? '',
+            'consignee_country_code' => $data['shipping_address']['country_code'] ?? '',
+            'consignee_phone' => $data['shipping_address']['phone'] ?? '',
 
             'shopify_order_id' => $data['id'],
             'checkout_id' => $data['checkout_id'],
