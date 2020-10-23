@@ -79,7 +79,7 @@ class GetOrdersTest extends Command
                     }
                 }
             }
-            dump($count);
+            dump('count:'.$count);
         } catch (\Exception $exception) {
             dump('error');
             Log::error($exception->getMessage());

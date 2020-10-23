@@ -59,7 +59,7 @@ class TestController extends Controller
                     }
                 }
             }
-            echo $count;
+            dump('count:'.$count);
         } catch (\Exception $exception) {
             echo 'error';
             Log::error($exception->getMessage());
