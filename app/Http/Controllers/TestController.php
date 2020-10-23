@@ -36,6 +36,7 @@ class TestController extends Controller
             $count = 0;
             foreach($data as $item){
                 $time = Carbon::parse($item['created_at'])->toDateTimeString();
+                dump($item);
                 if($time >= $start_time && $time <= $end_time) {
                     ++$count;
                     echo $item['order_number'];
@@ -53,6 +54,7 @@ class TestController extends Controller
 
                 foreach($data as $item){
                     $time = Carbon::parse($item['created_at'])->toDateTimeString();
+                    dump($item);
                     if($time >= $start_time && $time <= $end_time) {
                         ++$count;
                         echo $item['order_number'];
