@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Model\Account;
-use App\Modle\PaypalReport;
+use App\Model\PaypalReport;
 use Carbon\Carbon;
 use Requests_Auth_Basic;
 
