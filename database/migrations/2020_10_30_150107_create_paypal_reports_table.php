@@ -23,8 +23,8 @@ class CreatePaypalReportsTable extends Migration
             $table->decimal('transaction_amount',8,2)->default(0.00);
             $table->decimal('fee_amount',8,2)->default(0.00);
             $table->string('invoice_id',50)->default('');
-            $table->timestamp('transaction_initiation_date');
-            $table->timestamp('transaction_updated_date');
+            $table->timestamp('transaction_initiation_date')->nullable();
+            $table->timestamp('transaction_updated_date')->nullable();
             $table->timestamps();
         });
     }
