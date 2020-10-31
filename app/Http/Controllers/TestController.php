@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Imports\OrdersImport;
 use App\Imports\TransportPriceImport;
 use App\Imports\TransportsImport;
+use App\Model\Account;
 use App\Model\Order;
 use App\Model\SaleVolumeOrderLog;
 use App\Model\Shop;
+use App\Services\Paypal;
 use App\Services\SaleVolume;
 use App\Services\Shopify;
 use App\SystemShopifyLog;
@@ -22,48 +24,6 @@ use Maatwebsite\Excel\Facades\Excel;
 class TestController extends Controller
 {
     public function index(){
-        $shop_id = 4;
-        $start_time = '2020-08-01';
-        $end_time = '2020-09-01';
-
-        $shop = Shop::find($shop_id);
-
-        try {
-            $model = new Shopify($shop);
-
-            [$data,$url] = $model->getOrders(Carbon::now()->subMonths(3)->toDateTimeString());
-
-            $count = 0;
-            foreach($data as $item){
-                $time = Carbon::parse($item['created_at'])->toDateTimeString();
-                if($time >= $start_time && $time <= $end_time) {
-                    ++$count;
-                    echo $item['order_number'];
-                }
-
-            }
-            while($url) {
-                $shopifyLog = SystemShopifyLog::create([
-                    'url' => $url,
-                    'command' => '',
-                    'shop_id' => $shop->id,
-                    'pid' => 0
-                ]);
-                [$data,$url] = $model->getOrdersByUrl($url,$shopifyLog);
-
-                foreach($data as $item){
-                    $time = Carbon::parse($item['created_at'])->toDateTimeString();
-                    if($time >= $start_time && $time <= $end_time) {
-                        ++$count;
-                        echo $item['order_number'];
-                    }
-                }
-            }
-            dump('count:'.$count);
-        } catch (\Exception $exception) {
-            echo 'error';
-            Log::error($exception->getMessage());
-        }
     }
 
     public function transport()

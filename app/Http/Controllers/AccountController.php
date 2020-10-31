@@ -48,7 +48,7 @@ class AccountController extends Controller
      */
     public function store(AccountCreateRequest $request)
     {
-        $data = $request->only(['account','account_type','password','charge_percent']);
+        $data = $request->only(['account','account_type','password','charge_percent','client_id','client_password']);
 
         $account = Account::create($data);
 
