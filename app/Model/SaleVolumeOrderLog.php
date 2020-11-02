@@ -34,7 +34,7 @@ class SaleVolumeOrderLog extends Model
 
     public function getExchangeAttribute($value)
     {
-        return $this->report->exchange ?? 7;
+        return $this->report->exchange ?: 7;
     }
 
     public function getCostPriceShowAttribute($value)

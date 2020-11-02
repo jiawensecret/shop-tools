@@ -6,8 +6,11 @@ namespace App\Services;
 
 use App\Model\AdPrice;
 use App\Model\Order;
+use App\Model\Person;
+use App\Model\RefundOrder;
 use App\Model\SalesVolume;
 use App\Model\SaleVolumeOrderLog;
+use App\Model\Shop;
 use App\Model\ShopPrice;
 use App\Model\SupportPriceTender;
 use App\Model\Transport;
@@ -205,6 +208,30 @@ class SaleVolume
                 ->where('shop_id', $price->shop_id)
                 ->update(['shop_charge' => $perPrice]);
         }
+
+        //退款信息
+        $refundOrder = RefundOrder::where('month',$this->month)->get();
+        foreach ($refundOrder as $item) {
+            $data = [
+                'person_id' => Shop::find($item->shop_id)->person_id ?? 0,
+                'month' => $this->month,
+            ];
+
+            $volume = SalesVolume::firstOrCreate($data);
+
+            $data = [
+                'order_price' => 0,
+                'month' => $this->month,
+                'cost_price' => 0,
+                'transport_price' => 0,
+                'pay_charge' => 0,
+                'refund' => $item->refund,
+                'order_create_time' => Carbon::now()
+            ];
+
+            $volume->log()->updateOrCreate(['refund_order_id' => '虚拟:'.$item->order_id, 'shop_id' => $item->shop_id],$data);
+        }
+
 
         //计算利润
         $raw = '(order_price - pay_charge - refund - shop_charge) *' . $exchange . '-cost_price-transport_price-ad_price';
