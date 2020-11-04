@@ -56,8 +56,6 @@ class SaleVolume
         }
 
         $this->shopToPerson[$shop->id] = $person->id;
-        $this->shopFee[$shop->id] = $shop->charge_percent;
-        $this->accountFee[$shop->id] = $account->charge_percent;
 
         return true;
     }
@@ -165,7 +163,7 @@ class SaleVolume
                         'transport_price' => $transport->sum('transport_price'),
                         'pay_charge' => $order->fee_amount,
                         'refund' => $order->refund_price,
-                        'shop_charge' => round($order->order_price * $log->shop->charge_percent,2)
+                        'shop_charge' => 0
                     ];
 
                     unset($cost);
