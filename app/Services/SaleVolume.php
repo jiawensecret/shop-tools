@@ -158,7 +158,8 @@ class SaleVolume
                         Log::info('tender:'.$item->supplier_price.'|||'.$supplierPrice.'|||'.$item['count']);
                     }
 
-                    $pay_charge = $order->fee_amount ?: round($order->order_price * 0.032,2) + 0.3;
+                    $pay_charge = $order->fee_amount > 0 ? $order->fee_amount : round($order->order_price * 0.032,2) + 0.3;
+                    if ($order->fee_amount > 0) Log::info('[pay:]'.$pay_charge);
 
                     $data = [
                         'order_price' => $order->order_price,
