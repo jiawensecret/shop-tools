@@ -108,12 +108,14 @@ class SaleVolume
                 unset($supportTender);
             }
 
+            $pay_charge = $order->fee_amount ?: round($order->order_price * 0.032,2) + 0.3;
+
             $data = [
                 'order_price' => $order->order_price,
                 'month' => $this->month,
                 'cost_price' => $cost,
                 'transport_price' => $transport->sum('transport_price'),
-                'pay_charge' => $order->fee_amount,
+                'pay_charge' => $pay_charge,
                 'refund' => $order->refund_price,
                 'order_create_time' => $order->order_time
             ];
@@ -156,12 +158,14 @@ class SaleVolume
                         Log::info('tender:'.$item->supplier_price.'|||'.$supplierPrice.'|||'.$item['count']);
                     }
 
+                    $pay_charge = $order->fee_amount ?: round($order->order_price * 0.032,2) + 0.3;
+
                     $data = [
                         'order_price' => $order->order_price,
                         'month' => $this->month,
                         'cost_price' => $cost,
                         'transport_price' => $transport->sum('transport_price'),
-                        'pay_charge' => $order->fee_amount,
+                        'pay_charge' => $pay_charge,
                         'refund' => $order->refund_price,
                         'shop_charge' => 0
                     ];
