@@ -108,7 +108,7 @@ class SaleVolume
                 unset($supportTender);
             }
 
-            $pay_charge = $order->fee_amount ?: round($order->order_price * 0.032,2) + 0.3;
+            $pay_charge = $order->fee_amount > 0 ? $order->fee_amount : round($order->order_price * 0.032,2) + 0.3;
 
             $data = [
                 'order_price' => $order->order_price,
